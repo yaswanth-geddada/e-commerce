@@ -1,0 +1,7 @@
+C:\Users\yaswa\source\repos\ECommerce_Application\bin\Debug\ECommerce_Application.exe.config
+C:\Users\yaswa\source\repos\ECommerce_Application\bin\Debug\ECommerce_Application.exe
+C:\Users\yaswa\source\repos\ECommerce_Application\bin\Debug\ECommerce_Application.pdb
+C:\Users\yaswa\source\repos\ECommerce_Application\obj\Debug\ECommerce_Application.csprojAssemblyReference.cache
+C:\Users\yaswa\source\repos\ECommerce_Application\obj\Debug\ECommerce_Application.csproj.CoreCompileInputs.cache
+C:\Users\yaswa\source\repos\ECommerce_Application\obj\Debug\ECommerce_Application.exe
+C:\Users\yaswa\source\repos\ECommerce_Application\obj\Debug\ECommerce_Application.pdb
