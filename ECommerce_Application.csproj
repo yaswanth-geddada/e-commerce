@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Models\Auth.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\orders.cs" />
     <Compile Include="Models\products.cs" />
     <Compile Include="Models\Vendors.cs" />
     <Compile Include="Program.cs" />
