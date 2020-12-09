@@ -42,6 +42,8 @@ namespace ECommerce_Application
             Console.WriteLine("1. login");
             Console.WriteLine("2. view profile");
             Console.WriteLine("3. my orders");
+            Console.WriteLine("4. view Products");
+            Console.WriteLine("5. exit");
 
             var choise = Convert.ToInt32(Console.ReadLine());
             menuDetails(choise);
@@ -50,14 +52,23 @@ namespace ECommerce_Application
 
         private void menuDetails(int choise)
         {
-            var userId = 1;
+            //var userId = 1;
             switch (choise)
             {
-                case 1: login();
+                case 1: 
+                    login();
                     break;
-                case 2: viewProfile();
+                case 2: 
+                    viewProfile();
                     break;
-                case 3: myOrders();
+                case 3: 
+                    myOrders();
+                    break;
+                case 4:
+                    viewProducts();
+                    break;
+                case 5:
+                    exit();
                     break;
 
             }
@@ -97,6 +108,11 @@ namespace ECommerce_Application
 
         }
 
+        private void exit()
+        {
+            System.Environment.Exit(0);
+        }
+
         private void viewProfile()
         {
             var userList = userData();
@@ -105,8 +121,7 @@ namespace ECommerce_Application
                 if(userId == item.UserId)
                 {
                     Console.WriteLine("Name : "+item.UserName);
-                    Console.WriteLine("Wallet Balance : "+ item.balance);
-                    
+                    Console.WriteLine("Wallet Balance : "+ item.balance);                    
                 }
             }
 
@@ -115,8 +130,18 @@ namespace ECommerce_Application
         private void myOrders()
         {
             var user = new user();
-            var userID = user.UserId;
             Console.WriteLine(userId);
+        }
+
+        private void viewProducts()
+        {
+            var productsList = productData();
+
+            foreach (var item in productsList)
+            {
+                Console.WriteLine("product name : {0} , price {1}/- , available Quantity {2}", item.Name, item.price, item.quantity);
+            }
+
         }
 
         static void Main(string[] args)
