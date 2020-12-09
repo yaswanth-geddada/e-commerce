@@ -75,9 +75,9 @@ namespace ECommerce_Application
             var auth = new Auth();
             int flag = 0;
 
-            Console.WriteLine("Enter your UserName");
+            Console.WriteLine("\nEnter your UserName");
             var userName =  Console.ReadLine();
-            Console.WriteLine("Enter password");
+            Console.WriteLine("\nEnter password");
             var password = Console.ReadLine();
             var user = new user();
             var list = userData();
