@@ -36,35 +36,41 @@ namespace ECommerce_Application
 
         //private static 
 
-        private void menu()
+        private void Menu()
         {
-           
-            Console.WriteLine("1. login");
-            Console.WriteLine("2. view profile");
-            Console.WriteLine("3. my orders");
 
-            var choise = Convert.ToInt32(Console.ReadLine());
-            menuDetails(choise);
+            Console.WriteLine("________________Welcome to ECommerce Application_________________\n");
+            Console.WriteLine("1. Login");
+            Console.WriteLine("2. Register");
+            Console.WriteLine("3. Exit\n");
+
+
+            Console.WriteLine("Your Choice");
+            var choise = int.Parse(Console.ReadLine());
+            MenuDetails(choise);
 
         }
 
-        private void menuDetails(int choise)
+        private void MenuDetails(int choise)
         {
             var userId = 1;
             switch (choise)
             {
-                case 1: login();
+                case 1: Login();
                     break;
-                case 2: viewProfile();
+                case 2: Register();
                     break;
-                case 3: myOrders();
+                case 3: 
+                    Environment.Exit(0);
                     break;
-
+                default:
+                    Console.WriteLine("Please Select one of the option");
+                    Menu();
+                    break;
             }
-            menu();
         }
 
-        private void login()
+        private void Login()
         {
             var auth = new Auth();
             int flag = 0;
@@ -95,9 +101,58 @@ namespace ECommerce_Application
                 Console.WriteLine("login failed");
             }
 
+            LoggedInMenu();
+
         }
 
-        private void viewProfile()
+        private void Register()
+        {
+            Console.WriteLine("\n WORK IN PROGRESS \n");
+        }
+
+
+        private void LoggedInMenu()
+        {
+            Console.WriteLine("\nSelect An Option");
+            Console.WriteLine("----------------\n");
+            Console.WriteLine("1. View profile");
+            Console.WriteLine("2. View Cart");
+            Console.WriteLine("3. Place Orders");
+            Console.WriteLine("4. My Orders\n");
+
+            Console.WriteLine("Your Choice");
+            var choice = int.Parse(Console.ReadLine());
+            LoggedInMenuDetails(choice);
+        }
+
+        private void LoggedInMenuDetails(int choice)
+        {
+            var userId = 1;
+            switch (choice)
+            {
+                case 1:
+                    ViewProfile();
+                    break;
+                case 2:
+                    MyCart();
+                    break;
+                case 3:
+                    PlaceOrders();
+                    break;
+                case 4:
+                    MyOrders();
+                    break;
+
+                default:
+                    Console.WriteLine("Please Select one of the option");
+                    LoggedInMenu();
+                    break;
+
+
+            }
+        }
+
+        private void ViewProfile()
         {
             var userList = userData();
             foreach(var item in userList)
@@ -112,7 +167,17 @@ namespace ECommerce_Application
 
         }
 
-        private void myOrders()
+        private void MyCart()
+        {
+            Console.WriteLine("\n WORK IN PROGRESS \n");
+        }
+
+        private void PlaceOrders()
+        {
+            Console.WriteLine("\n WORK IN PROGRESS \n");
+        }
+
+        private void MyOrders()
         {
             var user = new user();
             var userID = user.UserId;
@@ -122,8 +187,7 @@ namespace ECommerce_Application
         static void Main(string[] args)
         {
             var obj = new Program();
-            Console.WriteLine("__________________Welcome to ECommerce Application__________________________");
-            obj.menu();
+            obj.Menu();
             Program.userData();
            
 
