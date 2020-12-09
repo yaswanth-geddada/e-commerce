@@ -2,12 +2,12 @@
 {
     class Auth
     {
-        private bool _isAuth = false;
+        private bool _isAuth;
 
         
         public string logIn(string userName, string password)
         {
-            this._isAuth = true;
+            _isAuth = true;
             return "login successful";
         }
 

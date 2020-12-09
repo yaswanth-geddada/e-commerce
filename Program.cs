@@ -36,53 +36,69 @@ namespace ECommerce_Application
 
         //private static 
 
-        private void menu()
+        private void Menu()
         {
-           
-            Console.WriteLine("1. login");
-            Console.WriteLine("2. view profile");
-            Console.WriteLine("3. my orders");
-            Console.WriteLine("4. view Products");
-            Console.WriteLine("5. exit");
 
-            var choise = Convert.ToInt32(Console.ReadLine());
-            menuDetails(choise);
+            Console.WriteLine("1. login");
+            Console.WriteLine("2. Register");
+            Console.WriteLine("3. view profile");
+            Console.WriteLine("4. my orders");
+            Console.WriteLine("5. view Products");
+            Console.WriteLine("6. View Cart");
+            Console.WriteLine("7. Place Orders");
+            Console.WriteLine("8. LogOut & Exit\n");
+
+
+            Console.WriteLine("Your Choice");
+            var choise = int.Parse(Console.ReadLine());
+            MenuDetails(choise);
 
         }
 
-        private void menuDetails(int choise)
+        private void MenuDetails(int choise)
         {
             //var userId = 1;
             switch (choise)
             {
-                case 1: 
-                    login();
+                
+                case 1:
+                    Login();
                     break;
-                case 2: 
+                
+                case 2: Register();
+                    break;
+                case 3:
                     viewProfile();
                     break;
-                case 3: 
-                    myOrders();
-                    break;
                 case 4:
-                    viewProducts();
+                    MyOrders();
                     break;
                 case 5:
+                    viewProducts();
+                    break;
+                case 6:
+                    MyCart();
+                    break;
+                case 7:
+                    PlaceOrders();
+                    break;
+                case 8:
                     exit();
                     break;
-
+               
+                
             }
-            menu();
+            Menu();
         }
 
-        private void login()
+        private void Login()
         {
             var auth = new Auth();
             int flag = 0;
 
-            Console.WriteLine("Enter your UserName");
+            Console.WriteLine("\nEnter your UserName");
             var userName =  Console.ReadLine();
-            Console.WriteLine("Enter password");
+            Console.WriteLine("\nEnter password");
             var password = Console.ReadLine();
             var user = new user();
             var list = userData();
@@ -92,7 +108,7 @@ namespace ECommerce_Application
                 if(item.UserName == userName && item.password == password)
                 {
                     var result = auth.logIn(userName, password);
-                    Console.WriteLine(result);
+                    Console.WriteLine(result+ "\n");
                     userId = item.UserId;
                     flag = 1;
                     //myOrders(item.UserId);
@@ -103,14 +119,24 @@ namespace ECommerce_Application
 
             if(flag == 0)
             {
-                Console.WriteLine("login failed");
+                Console.WriteLine("login failed\n");
             }
+
+           
 
         }
 
+        private void Register()
+        {
+            Console.WriteLine("\n WORK IN PROGRESS \n");
+        }
+       
         private void exit()
         {
+            var auth = new Auth();
+            auth.logOut();
             System.Environment.Exit(0);
+
         }
 
         private void viewProfile()
@@ -121,13 +147,23 @@ namespace ECommerce_Application
                 if(userId == item.UserId)
                 {
                     Console.WriteLine("Name : "+item.UserName);
-                    Console.WriteLine("Wallet Balance : "+ item.balance);                    
+                    Console.WriteLine("Wallet Balance : "+ item.balance+ "\n");                    
                 }
             }
 
         }
 
-        private void myOrders()
+        private void MyCart()
+        {
+            Console.WriteLine("\n WORK IN PROGRESS \n");
+        }
+
+        private void PlaceOrders()
+        {
+            Console.WriteLine("\n WORK IN PROGRESS \n");
+        }
+
+        private void MyOrders()
         {
             var user = new user();
             Console.WriteLine(userId);
@@ -139,7 +175,7 @@ namespace ECommerce_Application
 
             foreach (var item in productsList)
             {
-                Console.WriteLine("product name : {0} , price {1}/- , available Quantity {2}", item.Name, item.price, item.quantity);
+                Console.WriteLine("product name : {0} , price {1}/- , available Quantity {2} \n", item.Name, item.price, item.quantity);
             }
 
         }
@@ -147,8 +183,9 @@ namespace ECommerce_Application
         static void Main(string[] args)
         {
             var obj = new Program();
-            Console.WriteLine("__________________Welcome to ECommerce Application__________________________");
-            obj.menu();
+            Console.WriteLine("________________Welcome to ECommerce Application_________________\n");
+
+            obj.Menu();
             Program.userData();
            
 
