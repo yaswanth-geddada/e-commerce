@@ -109,7 +109,9 @@ namespace ECommerce_Application
 
         private void Register()
         {
-            Console.WriteLine("\nPress 1 for Customer or 2 for Vendor");
+            Console.WriteLine(
+                "\nPlease select the user Type \nPress 1 for Customer \n Press 2 for Vendor"
+                );
             string option = Console.ReadLine();
             string UserType;
             if (option == "1")
@@ -120,6 +122,8 @@ namespace ECommerce_Application
             {
                 UserType = "Vendor";
             }
+            Random rand = new Random();
+
             Console.WriteLine("\nEnter UserName");
             string UserName = Console.ReadLine();
 
@@ -127,7 +131,7 @@ namespace ECommerce_Application
             string password = Console.ReadLine();
 
             Console.WriteLine("\nEnter UserId");
-            int UserId = Convert.ToInt32(Console.ReadLine());
+            int UserId = rand.Next(1000, 2000);
 
             int walletMoney = 5000;
   
@@ -144,67 +148,120 @@ namespace ECommerce_Application
 
         }
 
-
-
         private void LoggedInMenu()
         {
-            Console.WriteLine("\nDashboard");
-            Console.WriteLine("-------------\n");
-            Console.WriteLine("0. Clear Screen");
-            Console.WriteLine("1. View Products");
-            Console.WriteLine("2. View profile");
-            Console.WriteLine("3. My Orders");
-            Console.WriteLine("4. View Cart");
-            Console.WriteLine("5. Place Orders");
-            Console.WriteLine("6. Logout");
-            Console.WriteLine("7. LogOut & Exit\n");
+            if(CurrentUser.role == "Customer")
+            {
+                Console.WriteLine("\nDashboard");
+                Console.WriteLine("-------------\n");
+                Console.WriteLine("0. Clear Screen");
+                Console.WriteLine("1. View Products");
+                Console.WriteLine("2. View profile");
+                Console.WriteLine("3. My Orders");
+                Console.WriteLine("4. View Cart");
+                Console.WriteLine("5. Place Orders");
+                Console.WriteLine("6. Logout");
+                Console.WriteLine("7. LogOut & Exit\n");
 
-            Console.WriteLine("Your Choice: ");
-            var choice = int.Parse(Console.ReadLine());
-            LoggedInMenuDetails(choice);
+                Console.WriteLine("Your Choice: ");
+                var choice = int.Parse(Console.ReadLine());
+                LoggedInMenuDetails(choice);
+            }
+            else if(CurrentUser.role == "Vendor")
+            {
+                Console.WriteLine("\nDashboard");
+                Console.WriteLine("-------------\n");
+                Console.WriteLine("0. Clear Screen");
+                Console.WriteLine("1. View Products");
+                Console.WriteLine("2. View profile");
+                Console.WriteLine("3. My Customer Orders");
+                Console.WriteLine("4. Logout");
+                Console.WriteLine("5. LogOut & Exit\n");
+
+                Console.WriteLine("Your Choice: ");
+                var choice = int.Parse(Console.ReadLine());
+                LoggedInMenuDetails(choice);
+            }
+            
         }
 
         private void LoggedInMenuDetails(int choice)
         {
-            switch (choice)
+            if (CurrentUser.role == "Customer")
             {
-                case 0:
-                    Console.Clear();
-                    Console.WriteLine("**cleared**\n");
-                    Console.Beep();
-                    LoggedInMenu();
-                    break;
+                switch (choice)
+                {
+                    case 0:
+                        Console.Clear();
+                        Console.WriteLine("**cleared**\n");
+                        Console.Beep();
+                        LoggedInMenu();
+                        break;
 
-                case 1:
-                    ViewProducts();
-                    break;
-                case 2:
-                    ViewProfile();
-                    break;
-                case 3:
-                    MyOrders();
-                    break;                
-                case 4:
-                    MyCart();
-                    break;
-                case 5:
-                    PlaceOrders();
-                    break;
-                case 6:
-                    LogOut();
-                    break;
-                case 7:
-                    Exit();
-                    break;
-                default:
-                    Console.WriteLine("Please choose an option");
-                    LoggedInMenu();
-                    break;
+                    case 1:
+                        ViewProducts();
+                        break;
+                    case 2:
+                        ViewProfile();
+                        break;
+                    case 3:
+                        MyOrders();
+                        break;
+                    case 4:
+                        MyCart();
+                        break;
+                    case 5:
+                        PlaceOrders();
+                        break;
+                    case 6:
+                        LogOut();
+                        break;
+                    case 7:
+                        Exit();
+                        break;
+                    default:
+                        Console.WriteLine("Please choose an option");
+                        LoggedInMenu();
+                        break;
 
+                }
             }
 
-        }
+            else if(CurrentUser.role == "Vendor")
+            {
+                switch (choice)
+                {
+                    case 0:
+                        Console.Clear();
+                        Console.WriteLine("**cleared**\n");
+                        Console.Beep();
+                        LoggedInMenu();
+                        break;
 
+                    case 1:
+                        ViewProducts();
+                        break;
+                    case 2:
+                        ViewProfile();
+                        break;
+                    case 3:
+                        //CustomerOrders();
+                    case 4:
+                        LogOut();
+                        break;
+                    case 5:
+                        Exit();
+                        break;
+                    default:
+                        Console.WriteLine("Please choose an option");
+                        LoggedInMenu();
+                        break;
+
+                }
+            }
+            
+
+        }
 
         private void Exit()
         {
@@ -224,41 +281,107 @@ namespace ECommerce_Application
 
         private void ViewProfile()
         {     
-            if (Auth.isLogIn() == false)
+            if (Auth.isLogIn() == false )
             {
                 Console.WriteLine("\nYou Have not logged in. Please Login");
                 Login();
             }
 
-     
-            Console.WriteLine("\nName : "+CurrentUser.UserName);
-            Console.WriteLine("Wallet Balance : "+ CurrentUser.balance+ "\n");
+            Console.WriteLine("\nName : " + CurrentUser.UserName);
+            Console.WriteLine("UserId : "+CurrentUser.UserId);
+            Console.WriteLine("Wallet Balance : " + CurrentUser.balance + "\n");
             Console.WriteLine("\nSelect An Action");
             Console.WriteLine("----------------");
-            Console.WriteLine("1. View your order list");
-            Console.WriteLine("2. Go back to Menu");
+
+            if (CurrentUser.role == "Customer" || CurrentUser.role == "customer")
+            {
+                Console.WriteLine("1. View your order list");
+                Console.WriteLine("2. Go back to Menu");
+
+                Console.WriteLine("Your option: ");
+                int op = int.Parse(Console.ReadLine());
+
+                if (op == 1)
+                {
+                    MyOrders();
+                }
+
+                else if (op == 2)
+                {
+                    LoggedInMenu();
+                }
+
+                else
+                {
+                    Console.WriteLine("Please select an option");
+                    ViewProfile();
+                }
+
+            }
+            if(CurrentUser.role == "Vendor" || CurrentUser.role == "vendor")
+            {
+                VendorProfile();
+            }
+        }
+
+        private void VendorActions() 
+        {
+
+        }
+
+        private void VendorProfile()
+        {
+            Console.WriteLine("1. View your product list");
+            Console.WriteLine("2. Add new Product");
+            Console.WriteLine("3. View Customer Orders");
+            Console.WriteLine("4. Go back to Menu");
 
             Console.WriteLine("Your option: ");
             int op = int.Parse(Console.ReadLine());
 
-            if(op == 1)
+            if (op == 1)
             {
-                MyOrders();
+                var prodList = _productList;
+                foreach (var item in prodList)
+                {
+                    Console.WriteLine((item.vendorId).ToString(), CurrentUser.UserId);
+                    if (item.vendorId == CurrentUser.UserId)
+                    {
+                        Console.WriteLine("product name : {0}\nprice {1}/- \navailable Quantity {2} \n",
+                        item.Name, item.price, item.quantity);
+                    }
+                }
+                VendorProfile();
+
             }
 
-            else if(op == 2)
+            else if (op == 2)
+            {
+                Random rand = new Random();
+                Console.WriteLine("\nEnter ProductName");
+                string productName = Console.ReadLine();
+                int prodId = rand.Next(1000, 9000);
+                Console.WriteLine("\nEnter Price of" + productName);
+                int prodPrice = Convert.ToInt32(Console.ReadLine());
+                int vendorId = CurrentUser.UserId;
+                Console.WriteLine("\nEnter Available Quantity");
+                int quantity = Convert.ToInt32(Console.ReadLine());
+
+                _productList.Add(new Products(productName, prodId, prodPrice, vendorId, quantity));
+                Console.WriteLine("\n Adding Product is in process...... \n");
+                Thread.Sleep(1000);
+                VendorProfile();
+            }
+
+            else if (op == 3)
+            {
+                Console.WriteLine("customers who order vendors products will be shown here");
+                VendorProfile();
+            }
+            else if (op == 4)
             {
                 LoggedInMenu();
             }
-
-            else
-            {
-                Console.WriteLine("Please select an option");
-                ViewProfile();
-            }
-           
-            
-
         }
 
         private void PlaceOrders()
@@ -270,11 +393,18 @@ namespace ECommerce_Application
                 Login();
             }
 
-            _ordersList.Add(new Orders(102, 1234, 1));
-            Console.WriteLine("Inserting Please Wait");
-            Thread.Sleep(2000);
-            Console.WriteLine("Order Inserted Successfully");
-            LoggedInMenu();
+            if(CurrentUser.role != "Vendor" || CurrentUser.role != "vendor")
+            {
+                _ordersList.Add(new Orders(102, 1234, 1));
+                Console.WriteLine("Inserting Please Wait");
+                Thread.Sleep(2000);
+                Console.WriteLine("Order Inserted Successfully");
+                LoggedInMenu();
+            }
+            else
+            {
+                Console.WriteLine("Sorry....you place order !");
+            }
 
         }
 
@@ -390,18 +520,21 @@ namespace ECommerce_Application
         {
             var Obj = new Program();         
             
+
             _ordersList.Add(new Orders(101, 1234, 1));
             _ordersList.Add(new Orders(102, 1235, 1));
 
-            _productList.Add(new Products("watch", 101, 100, 5));
-            _productList.Add(new Products("OnePlus 8", 102, 300, 3));
-            _productList.Add(new Products("Laptop", 103, 500, 1));
-            _productList.Add(new Products("shirt", 104, 100, 3));
-            _productList.Add(new Products("ear phones", 105, 100, 5));
+            //itemName,prodID,price,quantity,vendorId
+            _productList.Add(new Products("watch", 101, 100,1000, 5));
+            _productList.Add(new Products("OnePlus 8", 102, 300, 1000, 3));
+            _productList.Add(new Products("Laptop", 103, 500, 1000, 1));
+            _productList.Add(new Products("shirt", 104, 100, 1000, 3));
+            _productList.Add(new Products("ear phones", 105, 100, 1001, 5));
 
-            _UsersList.Add(new User("Yaswanth", 1234, "customer", 1000, "1234"));
-            _UsersList.Add(new User("Akshay", 1000, "vendor", 1000, "1000"));
-            _UsersList.Add(new User("Sai Prasanna", 1235, "customer", 1000, "1234"));
+            //CustName,custId,custType,balance,password
+            _UsersList.Add(new User("Yaswanth", 1234, "Customer", 1000, "1234"));
+            _UsersList.Add(new User("Akshay", 1000, "Vendor", 1000, "1000"));
+            _UsersList.Add(new User("Sai Prasanna", 1235, "Customer", 1000, "1234"));
 
             Obj.Menu();
 
