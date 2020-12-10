@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "RunApplication",
+      "dependsOn": [
+        "clean"
+      ],
+      "type": "shell",
+      "windows": {
+        "command": "/c/Users/53433/source/e-commerce/.vscode/RunApp.sh" //  CHANGE THE PATH ACCORDINGLY
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
