@@ -190,85 +190,93 @@ namespace ECommerce_Application
                 Console.WriteLine("5. LogOut & Exit\n");
 
                 Console.WriteLine("Your Choice: ");
-                var choice = int.Parse(Console.ReadLine());
-                LoggedInMenuDetails(choice);
+             
+                    var choice = int.Parse(Console.ReadLine());
+                //if(choice.GetType == "Int")
+                    LoggedInMenuDetails(choice);
+                
+
+                
             }
             
         }
 
         private void LoggedInMenuDetails(int choice)
         {
-            if (CurrentUser.role == "Customer")
-            {
-                switch (choice)
+           
+                if (CurrentUser.role == "Customer")
                 {
-                    case 0:
-                        Console.Clear();
-                        Console.WriteLine("**cleared**\n");
-                        Console.Beep();
-                        LoggedInMenu();
-                        break;
+                    switch (choice)
+                    {
+                        case 0:
+                            Console.Clear();
+                            Console.WriteLine("**cleared**\n");
+                            Console.Beep();
+                            LoggedInMenu();
+                            break;
 
-                    case 1:
-                        ViewProducts();
-                        break;
-                    case 2:
-                        ViewProfile();
-                        break;
-                    case 3:
-                        MyOrders();
-                        break;
-                    case 4:
-                        MyCart();
-                        break;
-                    case 5:
-                        PlaceOrders();
-                        break;
-                    case 6:
-                        LogOut();
-                        break;
-                    case 7:
-                        Exit();
-                        break;
-                    default:
-                        Console.WriteLine("Please choose an option");
-                        LoggedInMenu();
-                        break;
+                        case 1:
+                            ViewProducts();
+                            break;
+                        case 2:
+                            ViewProfile();
+                            break;
+                        case 3:
+                            MyOrders();
+                            break;
+                        case 4:
+                            MyCart();
+                            break;
+                        case 5:
+                            PlaceOrders();
+                            break;
+                        case 6:
+                            LogOut();
+                            break;
+                        case 7:
+                            Exit();
+                            break;
+                        default:
+                            Console.WriteLine("Please choose an option");
+                            LoggedInMenu();
+                            break;
 
+                    }
                 }
-            }
 
-            else if(CurrentUser.role == "Vendor")
-            {
-                switch (choice)
+                else if (CurrentUser.role == "Vendor")
                 {
-                    case 0:
-                        Console.Clear();
-                        Console.WriteLine("**cleared**\n");
-                        Console.Beep();
-                        LoggedInMenu();
-                        break;
+                    switch (choice)
+                    {
+                        case 0:
+                            Console.Clear();
+                            Console.WriteLine("**cleared**\n");
+                            Console.Beep();
+                            LoggedInMenu();
+                            break;
 
-                    case 1:
-                        ViewProducts();
-                        break;
-                    case 2:
-                        ViewProfile();
-                        break;
-                    case 3:
+                        case 1:
+                            ViewProducts();
+                            break;
+                        case 2:
+                            ViewProfile();
+                            break;
+                        case 3:
                         //CustomerOrders();
-                    case 4:
-                        LogOut();
-                        break;
-                    case 5:
-                        Exit();
-                        break;
-                    default:
-                        Console.WriteLine("Please choose an option");
-                        LoggedInMenu();
-                        break;
+                        case 4:
+                            LogOut();
+                            break;
+                        case 5:
+                            Exit();
+                            break;
+                        default:
+                            Console.WriteLine("Please choose an option");
+                            LoggedInMenu();
+                            break;
 
+                    
                 }
+
             }
             
 
@@ -307,6 +315,7 @@ namespace ECommerce_Application
             if (CurrentUser.role == "Customer" || CurrentUser.role == "customer")
             {
                 Console.WriteLine("1. View your order list");
+
                 Console.WriteLine("2. Go back to Menu");
 
                 Console.WriteLine("Your option: ");
@@ -419,22 +428,65 @@ namespace ECommerce_Application
 
         private void MyOrders()
         {
+            int op = 0;
             if (Auth.isLogIn() == false)
             {
                 Console.WriteLine("\nYou Have not logged in. Please Login");
                 Login();
             }
+            int count = orders.getOrders(produts.ProductList, CurrentUser.UserId);
 
-            var MyOrdersList = orders.OrdersList;
-
-            foreach (var MyOrder in MyOrdersList)
+            //Console.WriteLine(count) ;
+            if(count != 0)
             {
-                if(CurrentUser.UserId == MyOrder.UserId)
-                {
-                    Console.WriteLine(MyOrder.UserId + " " + MyOrder.prodId + " " + MyOrder.quantity);
-                }
+                Console.WriteLine("\nIf you want to cancle the order press 1");
+                op = Convert.ToInt32(Console.ReadLine());
+            }
+            else
+            {
+                Console.WriteLine("\nNo Orders Found");
+                LoggedInMenu();
+            }
+                
+            
+
+            if(op == 1)
+            {
+                Console.WriteLine("\nEnter the Product Id");
+                int prodId = Convert.ToInt32(Console.ReadLine());
+                cancleOrder(prodId);
+                
+            }
+            else
+            {
+                LoggedInMenu();
             }
             LoggedInMenu();
+        }
+
+        private void cancleOrder(int prodId)
+        {
+            var lis = orders.OrdersList;
+            var count = 0;
+            foreach (var order in lis)
+            {
+                
+                if(order.prodId == prodId)
+                {
+                    
+                    Orders productObject = order;
+                    orders.cancleOrder(productObject);
+                    //orders.OrdersList.Remove(order);
+                    Console.WriteLine("\nProduct Cancled");
+                    count += 1;
+                    break;
+                }
+            }
+            if (count == 0)
+            {
+                Console.WriteLine("Product with {0} Not found", prodId);
+            }
+                
         }
 
         private void ViewProducts()
@@ -516,12 +568,11 @@ namespace ECommerce_Application
 
         private void MyCart()
         {
-            Console.WriteLine("\n WORK IN PROGRESS \n");
+           
         }
 
         private void AddToCart(int ProductId)
         {
-            Console.WriteLine("\n WORK IN PROGRESS \n");
         }
 
         static void Main(string[] args)
