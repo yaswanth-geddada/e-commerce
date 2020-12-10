@@ -224,11 +224,6 @@ namespace ECommerce_Application
 
         }
 
-        private void MyCart()
-        {
-            Console.WriteLine("\n WORK IN PROGRESS \n");
-        }
-
         private void PlaceOrders()
         {
             _ordersList.Add(new orders(102, 1234, 1));
@@ -257,10 +252,81 @@ namespace ECommerce_Application
 
             foreach (var item in productsList)
             {
-                Console.WriteLine("product name : {0} , price {1}/- , available Quantity {2} \n",
+                Console.WriteLine("product name : {0}\nprice {1}/- \navailable Quantity {2} \n",
                     item.Name, item.price, item.quantity);
             }
 
+            Console.WriteLine("\nSelect an action");
+            Console.WriteLine("----------------\n");
+            Console.WriteLine("1. Continue Adding To Cart");
+            Console.WriteLine("2. Go Back to Menu");
+
+            Console.WriteLine("\nSelect an Option: ");
+            int Action = int.Parse(Console.ReadLine());
+
+            switch (Action)
+            {
+                case 1:
+                    Console.WriteLine("\nPlease Select an order ID for action: ");
+                    int OrderId = int.Parse(Console.ReadLine());
+                    ProductActionMenu(OrderId);
+                    break;
+
+                case 2:
+                    var Auth = new Auth();
+
+                    if(Auth.islogIn() == false)  
+                        Menu();
+
+                    else
+                        LoggedInMenu();
+                    
+                    break;
+
+                default:
+                    Console.WriteLine("\nPlease Select an Option.");
+                    ViewProducts();
+                    break;
+            }
+        }
+
+        private void ProductActionMenu(int OrderId)
+        {
+            Console.WriteLine("\nSelect an action");
+            Console.WriteLine("----------------\n");
+            Console.WriteLine("1. Add to Cart");
+            Console.WriteLine("2. Go Back to Menu");
+
+            Console.WriteLine("\nYour option: ");
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                    break;
+
+                case 2:
+                    var Auth = new Auth();
+
+                    if (Auth.islogIn() == false)
+                        Menu();
+
+                    else
+                        LoggedInMenu();
+
+                    break;
+
+                default:
+                    Console.WriteLine("\nPlease Select an Option");
+                    ProductActionMenu(OrderId);
+                    break;
+
+            }
+        }
+
+        private void MyCart()
+        {
+            Console.WriteLine("\n WORK IN PROGRESS \n");
         }
 
         static void Main(string[] args)
