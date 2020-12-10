@@ -257,25 +257,25 @@ namespace ECommerce_Application
                 Login();
             }
 
-            var res = _ordersList;
+            var MyOrdersList = _ordersList;
 
-            foreach (var item in res)
+            foreach (var MyOrder in MyOrdersList)
             {
-                if(CurrentUser.UserId == item.UserId)
+                if(CurrentUser.UserId == MyOrder.UserId)
                 {
-                    Console.WriteLine(item.UserId + " " + item.prodId + " " + item.quantity);
+                    Console.WriteLine(MyOrder.UserId + " " + MyOrder.prodId + " " + MyOrder.quantity);
                 }
             }
         }
 
         private void ViewProducts()
         {
-            var productsList = _productList;
+            var ProductsList = _productList;
 
-            foreach (var item in productsList)
+            foreach (var product in ProductsList)
             {
                 Console.WriteLine("product name : {0}\nprice {1}/- \navailable Quantity {2} \n",
-                    item.Name, item.price, item.quantity);
+                    product.Name, product.price, product.quantity);
             }
 
             Console.WriteLine("\nSelect an action");
@@ -290,8 +290,8 @@ namespace ECommerce_Application
             {
                 case 1:
                     Console.WriteLine("\nPlease Select an order ID for action: ");
-                    int OrderId = int.Parse(Console.ReadLine());
-                    ProductActionMenu(OrderId);
+                    int ProductId = int.Parse(Console.ReadLine());
+                    ProductActionMenu(ProductId);
                     break;
 
                 case 2:
@@ -311,7 +311,7 @@ namespace ECommerce_Application
             }
         }
 
-        private void ProductActionMenu(int OrderId)
+        private void ProductActionMenu(int ProductId)
         {
             Console.WriteLine("\nSelect an action");
             Console.WriteLine("----------------\n");
@@ -324,6 +324,7 @@ namespace ECommerce_Application
             switch (choice)
             {
                 case 1:
+                    AddToCart(ProductId);
                     break;
 
                 case 2:
@@ -338,7 +339,7 @@ namespace ECommerce_Application
 
                 default:
                     Console.WriteLine("\nPlease Select an Option");
-                    ProductActionMenu(OrderId);
+                    ProductActionMenu(ProductId);
                     break;
 
             }
@@ -349,9 +350,14 @@ namespace ECommerce_Application
             Console.WriteLine("\n WORK IN PROGRESS \n");
         }
 
+        private void AddToCart(int ProductId)
+        {
+            Console.WriteLine("\n WORK IN PROGRESS \n");
+        }
+
         static void Main(string[] args)
         {
-            var obj = new Program();         
+            var Obj = new Program();         
             
             _ordersList.Add(new Orders(101, 1234, 1));
             _ordersList.Add(new Orders(102, 1235, 1));
@@ -366,7 +372,7 @@ namespace ECommerce_Application
             _UsersList.Add(new User("Akshay", 1000, "vendor", 1000, "1000"));
             _UsersList.Add(new User("Sai Prasanna", 1235, "customer", 1000, "1234"));
 
-            obj.Menu();
+            Obj.Menu();
 
 
         }
