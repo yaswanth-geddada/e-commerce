@@ -5,3 +5,10 @@ D:\Projects\dotNet projects\e-commerce\bin\Debug\ECommerce_Application.exe
 D:\Projects\dotNet projects\e-commerce\bin\Debug\ECommerce_Application.pdb
 D:\Projects\dotNet projects\e-commerce\obj\Debug\ECommerce_Application.exe
 D:\Projects\dotNet projects\e-commerce\obj\Debug\ECommerce_Application.pdb
+C:\Users\53433\source\e-commerce\bin\Debug\ECommerce_Application.exe.config
+C:\Users\53433\source\e-commerce\bin\Debug\ECommerce_Application.exe
+C:\Users\53433\source\e-commerce\bin\Debug\ECommerce_Application.pdb
+C:\Users\53433\source\e-commerce\obj\Debug\ECommerce_Application.csprojAssemblyReference.cache
+C:\Users\53433\source\e-commerce\obj\Debug\ECommerce_Application.csproj.CoreCompileInputs.cache
+C:\Users\53433\source\e-commerce\obj\Debug\ECommerce_Application.exe
+C:\Users\53433\source\e-commerce\obj\Debug\ECommerce_Application.pdb

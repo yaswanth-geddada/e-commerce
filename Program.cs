@@ -20,7 +20,6 @@ namespace ECommerce_Application
 
             Console.WriteLine("Welcome to ECommerce Application");
             Console.WriteLine("--------------------------------\n");
-            Console.WriteLine("0. Clear Screen");
             Console.WriteLine("1. Login");
             Console.WriteLine("2. Register");
             Console.WriteLine("3. View Products");
@@ -49,7 +48,7 @@ namespace ECommerce_Application
                 case 1:
                     Login();
                     break;
-                case 2: 
+                case 2:
                     Register();
                     break;
                 case 3:
@@ -68,7 +67,7 @@ namespace ECommerce_Application
 
         private void Login()
         {
-         
+
             int flag = 0;
 
             Console.WriteLine("\nEnter your UserName");
@@ -93,14 +92,14 @@ namespace ECommerce_Application
                     LoggedInMenu();
                     break;
                 }
-                
+
             }
 
             if(flag == 0)
             {
                 Console.WriteLine("login failed\n");
             }
-            
+
                 Console.Clear();
                 Console.WriteLine("**you are already login**\n");
                 Console.Beep();
@@ -130,7 +129,7 @@ namespace ECommerce_Application
             int UserId = Convert.ToInt32(Console.ReadLine());
 
             int walletMoney = 5000;
-  
+
             _UsersList.Add(new User(UserName, UserId, UserType, walletMoney, password));
             Console.WriteLine("\n Account creation is in process...... \n");
             Thread.Sleep(1000);
@@ -183,7 +182,7 @@ namespace ECommerce_Application
                     break;
                 case 3:
                     MyOrders();
-                    break;                
+                    break;
                 case 4:
                     MyCart();
                     break;
@@ -223,14 +222,14 @@ namespace ECommerce_Application
         }
 
         private void ViewProfile()
-        {     
+        {
             if (Auth.isLogIn() == false)
             {
                 Console.WriteLine("\nYou Have not logged in. Please Login");
                 Login();
             }
 
-     
+
             Console.WriteLine("\nName : "+CurrentUser.UserName);
             Console.WriteLine("Wallet Balance : "+ CurrentUser.balance+ "\n");
             Console.WriteLine("\nSelect An Action");
@@ -256,8 +255,8 @@ namespace ECommerce_Application
                 Console.WriteLine("Please select an option");
                 ViewProfile();
             }
-           
-            
+
+
 
         }
 
@@ -327,12 +326,12 @@ namespace ECommerce_Application
 
                 case 2:
 
-                    if(Auth.isLogIn() == false)  
+                    if(Auth.isLogIn() == false)
                         Menu();
 
                     else
                         LoggedInMenu();
-                    
+
                     break;
 
                 default:
@@ -388,8 +387,8 @@ namespace ECommerce_Application
 
         static void Main(string[] args)
         {
-            var Obj = new Program();         
-            
+            var Obj = new Program();
+
             _ordersList.Add(new Orders(101, 1234, 1));
             _ordersList.Add(new Orders(102, 1235, 1));
 
