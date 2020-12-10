@@ -20,6 +20,7 @@ namespace ECommerce_Application
 
             Console.WriteLine("Welcome to ECommerce Application");
             Console.WriteLine("--------------------------------\n");
+            Console.WriteLine("0. Clear Screen");
             Console.WriteLine("1. Login");
             Console.WriteLine("2. Register");
             Console.WriteLine("3. View Products");
@@ -37,7 +38,14 @@ namespace ECommerce_Application
             //var UserId = 1;
             switch (choise)
             {
-                
+                case 0:
+                    Console.Clear();
+                    Console.WriteLine("**cleared**\n");
+                    Console.Beep();
+                    Menu();
+                    break;
+
+
                 case 1:
                     Login();
                     break;
@@ -48,7 +56,7 @@ namespace ECommerce_Application
                     ViewProducts();
                     break;
                 case 4:
-                    System.Environment.Exit(0);
+                    Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("Please choose an option");
@@ -79,6 +87,9 @@ namespace ECommerce_Application
                     Console.WriteLine(result+ "\n");
                     CurrentUser = user;
                     flag = 1;
+                    Console.WriteLine("Please wait Logging In ......");
+                    Thread.Sleep(2000);
+                    Console.Clear();
                     LoggedInMenu();
                     break;
                 }
@@ -90,14 +101,9 @@ namespace ECommerce_Application
                 Console.WriteLine("login failed\n");
             }
             
-
                 Console.Clear();
                 Console.WriteLine("**you are already login**\n");
                 Console.Beep();
-                
-            
-
-
 
         }
 
@@ -116,19 +122,25 @@ namespace ECommerce_Application
             }
             Console.WriteLine("\nEnter UserName");
             string UserName = Console.ReadLine();
+
             Console.WriteLine("\nEnter Password\n");
             string password = Console.ReadLine();
+
             Console.WriteLine("\nEnter UserId");
             int UserId = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("\nEnter Balance");
-            int walletMoney = Convert.ToInt32(Console.ReadLine());
-            
 
+            int walletMoney = 5000;
+  
             _UsersList.Add(new User(UserName, UserId, UserType, walletMoney, password));
             Console.WriteLine("\n Account creation is in process...... \n");
             Thread.Sleep(1000);
             Console.Clear();
-            Console.WriteLine("\n Account has been created Successfully \n UserName : {0} , Password : {1}", UserName, password);
+            Console.WriteLine(
+                "\n Account has been created Successfully \n UserName : {0} , Password : {1}",
+                UserName, password
+                );
+            Console.WriteLine("\nPlease Login");
+            Login();
 
         }
 
@@ -138,12 +150,14 @@ namespace ECommerce_Application
         {
             Console.WriteLine("\nDashboard");
             Console.WriteLine("-------------\n");
+            Console.WriteLine("0. Clear Screen");
             Console.WriteLine("1. View Products");
             Console.WriteLine("2. View profile");
             Console.WriteLine("3. My Orders");
             Console.WriteLine("4. View Cart");
             Console.WriteLine("5. Place Orders");
-            Console.WriteLine("6. Log Out & Exit\n");
+            Console.WriteLine("6. Logout");
+            Console.WriteLine("7. LogOut & Exit\n");
 
             Console.WriteLine("Your Choice: ");
             var choice = int.Parse(Console.ReadLine());
@@ -154,6 +168,12 @@ namespace ECommerce_Application
         {
             switch (choice)
             {
+                case 0:
+                    Console.Clear();
+                    Console.WriteLine("**cleared**\n");
+                    Console.Beep();
+                    LoggedInMenu();
+                    break;
 
                 case 1:
                     ViewProducts();
@@ -171,6 +191,9 @@ namespace ECommerce_Application
                     PlaceOrders();
                     break;
                 case 6:
+                    LogOut();
+                    break;
+                case 7:
                     Exit();
                     break;
                 default:
@@ -185,12 +208,18 @@ namespace ECommerce_Application
 
         private void Exit()
         {
-
             Auth.LogOut();
-            Auth = null;
-            CurrentUser = null;
-            System.Environment.Exit(0);
+            Auth = new Authentication();
+            CurrentUser = new User();
+            Environment.Exit(0);
+        }
 
+        private void LogOut()
+        {
+            Auth.LogOut();
+            Auth = new Authentication();
+            CurrentUser = new User();
+            Menu();
         }
 
         private void ViewProfile()
@@ -204,7 +233,6 @@ namespace ECommerce_Application
      
             Console.WriteLine("\nName : "+CurrentUser.UserName);
             Console.WriteLine("Wallet Balance : "+ CurrentUser.balance+ "\n");
-
             Console.WriteLine("\nSelect An Action");
             Console.WriteLine("----------------");
             Console.WriteLine("1. View your order list");
@@ -246,6 +274,7 @@ namespace ECommerce_Application
             Console.WriteLine("Inserting Please Wait");
             Thread.Sleep(2000);
             Console.WriteLine("Order Inserted Successfully");
+            LoggedInMenu();
 
         }
 
@@ -266,6 +295,8 @@ namespace ECommerce_Application
                     Console.WriteLine(item.UserId + " " + item.prodId + " " + item.quantity);
                 }
             }
+
+            LoggedInMenu();
         }
 
         private void ViewProducts()
