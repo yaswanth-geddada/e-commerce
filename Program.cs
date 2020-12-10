@@ -9,8 +9,8 @@ namespace ECommerce_Application
 {
     class Program
     {
-        int UserId = 0;
-        bool isLogin = false;
+        private static User CurrentUser = new User();
+        private static Authentication Auth = new Authentication();
         private static List<Orders> _ordersList = new List<Orders>();
         private static List<User> _UsersList = new List<User>();
         private static List<Products> _productList = new List<Products>();
@@ -60,8 +60,7 @@ namespace ECommerce_Application
 
         private void Login()
         {
-            if(this.isLogin == false) { 
-            var auth = new Auth();
+         
             int flag = 0;
 
             Console.WriteLine("\nEnter your UserName");
@@ -69,18 +68,18 @@ namespace ECommerce_Application
             Console.WriteLine("\nEnter password");
             var password = Console.ReadLine();
             var User = new User();
-                var list = _UsersList;
+                var UserList = _UsersList;
 
-            foreach(var item in list)
+            foreach(var user in UserList)
             {
-                if(item.UserName == UserName && item.password == password)
+                if(user.UserName == UserName && user.password == password)
                 {
-                    var result = auth.logIn();
-                    this.isLogin = auth.islogIn();
+                    var result = Auth.LogIn();
+                    Auth.isLogIn();
                     Console.WriteLine(result+ "\n");
-                    UserId = item.UserId;
+                    CurrentUser = user;
                     flag = 1;
-                    //myOrders(item.UserId);
+                    LoggedInMenu();
                     break;
                 }
                 
@@ -90,14 +89,13 @@ namespace ECommerce_Application
             {
                 Console.WriteLine("login failed\n");
             }
-            }
-            else
-            {
+            
+
                 Console.Clear();
                 Console.WriteLine("**you are already login**\n");
                 Console.Beep();
                 
-            }
+            
 
 
 
@@ -187,38 +185,48 @@ namespace ECommerce_Application
 
         private void Exit()
         {
-            var auth = new Auth();
-            auth.logOut();
+
+            Auth.LogOut();
+            Auth = null;
+            CurrentUser = null;
             System.Environment.Exit(0);
 
         }
 
         private void ViewProfile()
-        {
-            var auth = new Auth();
-            if (this.isLogin == false)
-                {
-                Console.WriteLine("please login to access your profile");
-                Login();
-                }
-            var UserList = _UsersList;
-            foreach(var item in UserList)
+        {     
+            if (Auth.isLogIn() == false)
             {
-                if(UserId == item.UserId)
-                {
-                    Console.WriteLine("Name : "+item.UserName);
-                    Console.WriteLine("Wallet Balance : "+ item.balance+ "\n");                    
-                }
+                Console.WriteLine("\nYou Have not logged in. Please Login");
+                Login();
             }
 
-            Console.WriteLine("press 1 to view your order list");
-            Console.WriteLine("press 2 to Go back");
+     
+            Console.WriteLine("\nName : "+CurrentUser.UserName);
+            Console.WriteLine("Wallet Balance : "+ CurrentUser.balance+ "\n");
 
-            int op = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nSelect An Action");
+            Console.WriteLine("----------------");
+            Console.WriteLine("1. View your order list");
+            Console.WriteLine("2. Go back to Menu");
+
+            Console.WriteLine("Your option: ");
+            int op = int.Parse(Console.ReadLine());
 
             if(op == 1)
             {
                 MyOrders();
+            }
+
+            else if(op == 2)
+            {
+                LoggedInMenu();
+            }
+
+            else
+            {
+                Console.WriteLine("Please select an option");
+                ViewProfile();
             }
            
             
@@ -227,6 +235,13 @@ namespace ECommerce_Application
 
         private void PlaceOrders()
         {
+
+            if (Auth.isLogIn() == false)
+            {
+                Console.WriteLine("\nYou Have not logged in. Please Login");
+                Login();
+            }
+
             _ordersList.Add(new Orders(102, 1234, 1));
             Console.WriteLine("Inserting Please Wait");
             Thread.Sleep(2000);
@@ -235,12 +250,18 @@ namespace ECommerce_Application
         }
 
         private void MyOrders()
-        {   
+        {
+            if (Auth.isLogIn() == false)
+            {
+                Console.WriteLine("\nYou Have not logged in. Please Login");
+                Login();
+            }
+
             var res = _ordersList;
 
             foreach (var item in res)
             {
-                if(UserId == item.UserId)
+                if(CurrentUser.UserId == item.UserId)
                 {
                     Console.WriteLine(item.UserId + " " + item.prodId + " " + item.quantity);
                 }
@@ -274,9 +295,8 @@ namespace ECommerce_Application
                     break;
 
                 case 2:
-                    var Auth = new Auth();
 
-                    if(Auth.islogIn() == false)  
+                    if(Auth.isLogIn() == false)  
                         Menu();
 
                     else
@@ -307,9 +327,8 @@ namespace ECommerce_Application
                     break;
 
                 case 2:
-                    var Auth = new Auth();
 
-                    if (Auth.islogIn() == false)
+                    if (Auth.isLogIn() == false)
                         Menu();
 
                     else
