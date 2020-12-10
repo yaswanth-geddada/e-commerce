@@ -16,26 +16,26 @@ namespace ECommerce_Application
         private string _vendorAddress;
         private string _vendorBankAccount;
 
-        public void Vendors()
-        {
+        public string VendorName { get => _vendorName; set => _vendorName = value; }
+        public string VendorEmail { get => _vendorEmail; set => _vendorEmail = value; }
+        public string VendorPassword { get => _vendorPassword; set => _vendorPassword = value; }
+        public string VendorPhone { get => _vendorPhone; set => _vendorPhone = value; }
+        public string VendorAddress { get => _vendorAddress; set => _vendorAddress = value; }
+        public string VendorBankAccount { get => _vendorBankAccount; set => _vendorBankAccount = value; }
 
+        public  Vendors(string argvendorName,string argvendorEmail, string argvendorPassword, string argvendorPhone, string argvendorAddress, string argvendorBankAccount )
+        {
+            this.VendorName = argvendorName;
+            this.VendorEmail = argvendorEmail;
+            this.VendorPassword = argvendorPassword;
+            this.VendorPhone = argvendorPhone;
+            this.VendorAddress = argvendorAddress;
+            this.VendorBankAccount = argvendorBankAccount;
         }
 
-        public string VendorBankAccount { get => _vendorBankAccount; set => _vendorBankAccount = value; }
-        public string VendorAddress { get => _vendorAddress; set => _vendorAddress = value; }
-        public string VendorPhone { get => _vendorPhone; set => _vendorPhone = value; }
-        public string VendorPassword { get => _vendorPassword; set => _vendorPassword = value; }
-        public string VendorEmail { get => _vendorEmail; set => _vendorEmail = value; }
-        public string VendorName { get => _vendorName; set => _vendorName = value; }
-
-        public void Vendors(_vendorName, _vendorEmail, _vendorPassword, _vendorPhone, _vendorAddress, _vendorBankAccount )
+        public Vendors()
         {
-            this._vendorName = _vendorName;
-            this._vendorEmail = _vendorEmail;
-            this._vendorPassword = _vendorPassword;
-            this._vendorPhone = _vendorPhone;
-            this._vendorAddress = _vendorAddress;
-            this._vendorBankAccount = _vendorBankAccount;
+
         }
 
         public override bool Equals(object obj)

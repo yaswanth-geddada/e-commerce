@@ -17,16 +17,16 @@ namespace ECommerce_Application
         public string ItemCategory { get => _itemCategory; set => _itemCategory = value; }
         public float ItemPrice { get => _itemPrice; set => _itemPrice = value; }
 
-        public void Cart()
+        public Cart()
         {
 
         }
 
-        public void Cart(_itemName, _itemCategory, _itemPrice)
+        public Cart(string argItemName,string argItemCategory,float argItemPrice)
         {
-            this._itemName = _itemName;
-            this._itemCategory = _itemCategory;
-            this._itemPrice = _itemPrice;
+            this._itemName = argItemName;
+            this._itemCategory = argItemCategory;
+            this._itemPrice = argItemPrice;
         }
 
         public override bool Equals(object obj)
