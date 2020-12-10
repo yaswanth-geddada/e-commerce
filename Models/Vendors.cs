@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace models
+namespace ECommerce_Application
 {
 
     class Vendors
