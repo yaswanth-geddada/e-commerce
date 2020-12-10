@@ -18,7 +18,7 @@ namespace ECommerce_Application
         private void Menu()
         {
 
-            Console.WriteLine("Welcome to ECommerce Application");
+            Console.WriteLine("\nWelcome to ECommerce Application");
             Console.WriteLine("--------------------------------\n");
             Console.WriteLine("1. Login");
             Console.WriteLine("2. Register");
