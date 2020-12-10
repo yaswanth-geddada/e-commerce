@@ -1,6 +1,6 @@
 #! /bin/sh
 
-path='C:\Users\53433\source\e-commerce'; # ADD YOUR PROJECT PATH HERE
+path='D:\Projects\dotNetprojects\e-commerce'; # ADD YOUR PROJECT PATH HERE
 
 cd ${path}
 

@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ECommerce_Application
 {
     class Program
     {
         private static User CurrentUser = new User();
+        private static userService usr = new userService();
+        private static productService produts = new productService();
         private static Authentication Auth = new Authentication();
-        private static List<Orders> _ordersList = new List<Orders>();
-        private static List<User> _UsersList = new List<User>();
-        private static List<Products> _productList = new List<Products>();
-
+        private static orderService orders = new orderService();
+        
         private void Menu()
         {
 
@@ -75,7 +72,7 @@ namespace ECommerce_Application
             Console.WriteLine("\nEnter password");
             var password = Console.ReadLine();
             var User = new User();
-                var UserList = _UsersList;
+            var UserList = usr.userList;
 
             foreach(var user in UserList)
             {
@@ -86,8 +83,13 @@ namespace ECommerce_Application
                     Console.WriteLine(result+ "\n");
                     CurrentUser = user;
                     flag = 1;
-                    Console.WriteLine("Please wait Logging In ......");
-                    Thread.Sleep(2000);
+                    Console.Write("Please wait Logging In ..");
+                    for (int i =0;i<10;i++)
+                    {
+                        Thread.Sleep(200);
+                        Console.Write(".");
+                    }
+                    //Thread.Sleep(2000);
                     Console.Clear();
                     LoggedInMenu();
                     break;
@@ -98,19 +100,25 @@ namespace ECommerce_Application
             if(flag == 0)
             {
                 Console.WriteLine("login failed\n");
+                Menu();
             }
 
                 Console.Clear();
                 Console.WriteLine("**you are already login**\n");
                 Console.Beep();
+                Menu();
 
         }
 
         private void Register()
         {
+            
+
+            
+
             Console.WriteLine(
-                "\nPlease select the user Type \nPress 1 for Customer \n Press 2 for Vendor"
-                );
+               "\nPlease select the user Type \nPress 1 for Customer \n Press 2 for Vendor"
+               );
             string option = Console.ReadLine();
             string UserType;
             if (option == "1")
@@ -121,7 +129,6 @@ namespace ECommerce_Application
             {
                 UserType = "Vendor";
             }
-            Random rand = new Random();
 
             Console.WriteLine("\nEnter UserName");
             string UserName = Console.ReadLine();
@@ -129,14 +136,19 @@ namespace ECommerce_Application
             Console.WriteLine("\nEnter Password\n");
             string password = Console.ReadLine();
 
-            Console.WriteLine("\nEnter UserId");
-            int UserId = rand.Next(1000, 2000);
 
-            int walletMoney = 5000;
 
-            _UsersList.Add(new User(UserName, UserId, UserType, walletMoney, password));
-            Console.WriteLine("\n Account creation is in process...... \n");
-            Thread.Sleep(1000);
+            usr.userRegistration(UserName, UserType, password);
+
+            
+
+            Console.Write("\n Account creation is in process..");
+            for (int i = 0; i < 10; i++)
+            {
+                Thread.Sleep(200);
+                Console.Write(".");
+            }
+            //Thread.Sleep(1000);
             Console.Clear();
             Console.WriteLine(
                 "\n Account has been created Successfully \n UserName : {0} , Password : {1}",
@@ -323,11 +335,6 @@ namespace ECommerce_Application
             }
         }
 
-        private void VendorActions() 
-        {
-
-        }
-
         private void VendorProfile()
         {
             Console.WriteLine("1. View your product list");
@@ -340,7 +347,7 @@ namespace ECommerce_Application
 
             if (op == 1)
             {
-                var prodList = _productList;
+                var prodList = produts.ProductList;
                 foreach (var item in prodList)
                 {
                     Console.WriteLine((item.vendorId).ToString(), CurrentUser.UserId);
@@ -366,7 +373,7 @@ namespace ECommerce_Application
                 Console.WriteLine("\nEnter Available Quantity");
                 int quantity = Convert.ToInt32(Console.ReadLine());
 
-                _productList.Add(new Products(productName, prodId, prodPrice, vendorId, quantity));
+                produts.ProductList.Add(new Products(productName, prodId, prodPrice, vendorId, quantity));
                 Console.WriteLine("\n Adding Product is in process...... \n");
                 Thread.Sleep(1000);
                 VendorProfile();
@@ -397,8 +404,8 @@ namespace ECommerce_Application
 
             if(CurrentUser.role != "Vendor" || CurrentUser.role != "vendor")
             {
-                _ordersList.Add(new Orders(102, 1234, 1));
                 Console.WriteLine("Inserting Please Wait");
+                orders.placeOrder();
                 Thread.Sleep(2000);
                 Console.WriteLine("Order Inserted Successfully");
                 LoggedInMenu();
@@ -418,7 +425,7 @@ namespace ECommerce_Application
                 Login();
             }
 
-            var MyOrdersList = _ordersList;
+            var MyOrdersList = orders.OrdersList;
 
             foreach (var MyOrder in MyOrdersList)
             {
@@ -427,17 +434,16 @@ namespace ECommerce_Application
                     Console.WriteLine(MyOrder.UserId + " " + MyOrder.prodId + " " + MyOrder.quantity);
                 }
             }
-
             LoggedInMenu();
         }
 
         private void ViewProducts()
         {
-            var ProductsList = _productList;
+            var ProductsList = produts.ProductList;
 
             foreach (var product in ProductsList)
             {
-                Console.WriteLine("product name : {0}\nprice {1}/- \navailable Quantity {2} \n",
+                Console.WriteLine("product name : {0}, price {1}/-  ,available Quantity {2} \n",
                     product.Name, product.price, product.quantity);
             }
 
@@ -522,23 +528,7 @@ namespace ECommerce_Application
         {
             var Obj = new Program();
 
-            _ordersList.Add(new Orders(101, 1234, 1));
-            _ordersList.Add(new Orders(102, 1235, 1));
-
-            //itemName,prodID,price,quantity,vendorId
-            _productList.Add(new Products("watch", 101, 100,1000, 5));
-            _productList.Add(new Products("OnePlus 8", 102, 300, 1000, 3));
-            _productList.Add(new Products("Laptop", 103, 500, 1000, 1));
-            _productList.Add(new Products("shirt", 104, 100, 1000, 3));
-            _productList.Add(new Products("ear phones", 105, 100, 1001, 5));
-
-            //CustName,custId,custType,balance,password
-            _UsersList.Add(new User("Yaswanth", 1234, "Customer", 1000, "1234"));
-            _UsersList.Add(new User("Akshay", 1000, "Vendor", 1000, "1000"));
-            _UsersList.Add(new User("Sai Prasanna", 1235, "Customer", 1000, "1234"));
-
             Obj.Menu();
-
 
         }
     }
