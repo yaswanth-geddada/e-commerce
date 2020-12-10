@@ -2,18 +2,18 @@
 
 namespace ECommerce_Application
 {
-    class orders
+    class Orders
     {
         public int prodId { get; set; }
         public int UserId { get; set; }
         public int quantity { get; set; }
 
-        public orders()
+        public Orders()
         {
 
         }
 
-        public orders(int prodId, int userId, int quantity)
+        public Orders(int prodId, int userId, int quantity)
         {
             this.prodId = prodId;
             this.UserId = userId;

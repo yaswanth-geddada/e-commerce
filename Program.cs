@@ -9,11 +9,11 @@ namespace ECommerce_Application
 {
     class Program
     {
-        int userId = 0;
+        int UserId = 0;
         bool isLogin = false;
-        private static List<orders> _ordersList = new List<orders>();
-        private static List<user> _usersList = new List<user>();
-        private static List<products> _productList = new List<products>();
+        private static List<Orders> _ordersList = new List<Orders>();
+        private static List<User> _UsersList = new List<User>();
+        private static List<Products> _productList = new List<Products>();
 
         private void Menu()
         {
@@ -34,7 +34,7 @@ namespace ECommerce_Application
 
         private void MenuDetails(int choise)
         {
-            //var userId = 1;
+            //var UserId = 1;
             switch (choise)
             {
                 
@@ -54,6 +54,7 @@ namespace ECommerce_Application
                     Console.WriteLine("Please choose an option");
                     Menu();
                     break;
+
             }
         }
 
@@ -64,20 +65,20 @@ namespace ECommerce_Application
             int flag = 0;
 
             Console.WriteLine("\nEnter your UserName");
-            var userName =  Console.ReadLine();
+            var UserName =  Console.ReadLine();
             Console.WriteLine("\nEnter password");
             var password = Console.ReadLine();
-            var user = new user();
-                var list = _usersList;
+            var User = new User();
+                var list = _UsersList;
 
             foreach(var item in list)
             {
-                if(item.UserName == userName && item.password == password)
+                if(item.UserName == UserName && item.password == password)
                 {
                     var result = auth.logIn();
                     this.isLogin = auth.islogIn();
                     Console.WriteLine(result+ "\n");
-                    userId = item.UserId;
+                    UserId = item.UserId;
                     flag = 1;
                     //myOrders(item.UserId);
                     break;
@@ -106,30 +107,30 @@ namespace ECommerce_Application
         {
             Console.WriteLine("\nPress 1 for Customer or 2 for Vendor");
             string option = Console.ReadLine();
-            string userType;
+            string UserType;
             if (option == "1")
             {
-                userType = "Customer";
+                UserType = "Customer";
             }
             else
             {
-                userType = "Vendor";
+                UserType = "Vendor";
             }
             Console.WriteLine("\nEnter UserName");
-            string userName = Console.ReadLine();
+            string UserName = Console.ReadLine();
             Console.WriteLine("\nEnter Password\n");
             string password = Console.ReadLine();
             Console.WriteLine("\nEnter UserId");
-            int userId = Convert.ToInt32(Console.ReadLine());
+            int UserId = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("\nEnter Balance");
             int walletMoney = Convert.ToInt32(Console.ReadLine());
             
 
-            _usersList.Add(new user(userName, userId, userType, walletMoney, password));
+            _UsersList.Add(new User(UserName, UserId, UserType, walletMoney, password));
             Console.WriteLine("\n Account creation is in process...... \n");
             Thread.Sleep(1000);
             Console.Clear();
-            Console.WriteLine("\n Account has been created Successfully \n userName : {0} , Password : {1}", userName, password);
+            Console.WriteLine("\n Account has been created Successfully \n UserName : {0} , Password : {1}", UserName, password);
 
         }
 
@@ -141,7 +142,7 @@ namespace ECommerce_Application
             Console.WriteLine("-------------\n");
             Console.WriteLine("1. View Products");
             Console.WriteLine("2. View profile");
-            Console.WriteLine("3. My orders");
+            Console.WriteLine("3. My Orders");
             Console.WriteLine("4. View Cart");
             Console.WriteLine("5. Place Orders");
             Console.WriteLine("6. Log Out & Exit\n");
@@ -200,10 +201,10 @@ namespace ECommerce_Application
                 Console.WriteLine("please login to access your profile");
                 Login();
                 }
-            var userList = _usersList;
-            foreach(var item in userList)
+            var UserList = _UsersList;
+            foreach(var item in UserList)
             {
-                if(userId == item.UserId)
+                if(UserId == item.UserId)
                 {
                     Console.WriteLine("Name : "+item.UserName);
                     Console.WriteLine("Wallet Balance : "+ item.balance+ "\n");                    
@@ -226,7 +227,7 @@ namespace ECommerce_Application
 
         private void PlaceOrders()
         {
-            _ordersList.Add(new orders(102, 1234, 1));
+            _ordersList.Add(new Orders(102, 1234, 1));
             Console.WriteLine("Inserting Please Wait");
             Thread.Sleep(2000);
             Console.WriteLine("Order Inserted Successfully");
@@ -239,7 +240,7 @@ namespace ECommerce_Application
 
             foreach (var item in res)
             {
-                if(userId == item.UserId)
+                if(UserId == item.UserId)
                 {
                     Console.WriteLine(item.UserId + " " + item.prodId + " " + item.quantity);
                 }
@@ -333,18 +334,18 @@ namespace ECommerce_Application
         {
             var obj = new Program();         
             
-            _ordersList.Add(new orders(101, 1234, 1));
-            _ordersList.Add(new orders(102, 1235, 1));
+            _ordersList.Add(new Orders(101, 1234, 1));
+            _ordersList.Add(new Orders(102, 1235, 1));
 
-            _productList.Add(new products("watch", 101, 100, 5));
-            _productList.Add(new products("OnePlus 8", 102, 300, 3));
-            _productList.Add(new products("Laptop", 103, 500, 1));
-            _productList.Add(new products("shirt", 104, 100, 3));
-            _productList.Add(new products("ear phones", 105, 100, 5));
+            _productList.Add(new Products("watch", 101, 100, 5));
+            _productList.Add(new Products("OnePlus 8", 102, 300, 3));
+            _productList.Add(new Products("Laptop", 103, 500, 1));
+            _productList.Add(new Products("shirt", 104, 100, 3));
+            _productList.Add(new Products("ear phones", 105, 100, 5));
 
-            _usersList.Add(new user("Yaswanth", 1234, "customer", 1000, "1234"));
-            _usersList.Add(new user("Akshay", 1000, "vendor", 1000, "1000"));
-            _usersList.Add(new user("Sai Prasanna", 1235, "customer", 1000, "1234"));
+            _UsersList.Add(new User("Yaswanth", 1234, "customer", 1000, "1234"));
+            _UsersList.Add(new User("Akshay", 1000, "vendor", 1000, "1000"));
+            _UsersList.Add(new User("Sai Prasanna", 1235, "customer", 1000, "1234"));
 
             obj.Menu();
 
