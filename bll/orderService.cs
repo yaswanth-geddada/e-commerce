@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleTables;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -24,6 +25,13 @@ namespace ECommerce_Application
 
         public int getOrders(List<Products> Products,int custId)
         {
+
+
+            var table = new ConsoleTable("ProductName", "ProdId", "ProdPrice", "vendorId", "Quantity");
+            
+            
+
+
             int count = 0;
             var lis = Products;
             foreach (var product in lis)
@@ -33,26 +41,29 @@ namespace ECommerce_Application
                 {
                     if (product.prodId == item.prodId && custId == item.UserId)
                     {
+                        table.AddRow(product.Name, item.prodId, product.price, product.vendorId, item.quantity);
                         //Console.WriteLine(item.quantity + product.Name + product.price);, Status : {3}, item.status
-                        Console.WriteLine("ProductId : {3}, Product : {0}, Price : {1}, Quantity : {2}",
-                            product.Name, product.price, item.quantity, item.prodId);
+                        //Console.WriteLine("ProductId : {3}, Product : {0}, Price : {1}, Quantity : {2}",
+                        //    product.Name, product.price, item.quantity, item.prodId);
                         count = count+1;
                     }
                 }  
             }
+            table.Write(Format.Alternative);
             return count;
         }
         public string placeOrder(int proId,int userId,int quantity,List<Products> prods,User user)
         {
             string fail = "failed";
             string Status = "Pending";
-            _ordersList.Add(new Orders(proId, userId, quantity, Status));
+            
             foreach (var item in prods)
             {
                 if(item.prodId == proId)
                 {
-                    if((item.quantity - quantity) >= 0 && user.balance  >= (item.price * quantity))
+                    if((item.quantity >=  quantity)  && user.balance  >= (item.price * quantity))
                     {
+                        _ordersList.Add(new Orders(proId, userId, quantity, Status));
                         item.quantity = item.quantity - quantity;
                         user.balance = user.balance - (item.price * quantity);
                     }
