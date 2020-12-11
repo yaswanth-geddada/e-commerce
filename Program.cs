@@ -12,54 +12,76 @@ namespace ECommerce_Application
         private static Authentication Auth = new Authentication();
         private static orderService orders = new orderService();
         
+
         private void Menu()
         {
 
-            Console.WriteLine("\nWelcome to ECommerce Application");
-            Console.WriteLine("--------------------------------\n");
-            Console.WriteLine("1. Login");
-            Console.WriteLine("2. Register");
-            Console.WriteLine("3. View Products");
-            Console.WriteLine("4. Exit\n");
+
+            try
+            {
+
+                Console.WriteLine("\nWelcome to ECommerce Application");
+                Console.WriteLine("--------------------------------\n");
+                Console.WriteLine("1. Login");
+                Console.WriteLine("2. Register");
+                Console.WriteLine("3. View Products");
+                Console.WriteLine("4. Exit\n");
 
 
-            Console.WriteLine("Your Choice");
-            var choise = int.Parse(Console.ReadLine());
-            MenuDetails(choise);
-
+                Console.WriteLine("Your Choice");
+                int choise = int.Parse(Console.ReadLine());
+                MenuDetails(choise);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("_______________");
+                Console.WriteLine("Invalid Input");
+                Console.WriteLine("_______________");
+                Menu();
+            }
         }
 
         private void MenuDetails(int choise)
         {
-            //var UserId = 1;
-            switch (choise)
+            try
             {
-                case 0:
-                    Console.Clear();
-                    Console.WriteLine("**cleared**\n");
-                    Console.Beep();
-                    Menu();
-                    break;
+                //var UserId = 1;
+                switch (choise)
+                {
+                    case 0:
+                        Console.Clear();
+                        Console.WriteLine("**cleared**\n");
+                        Console.Beep();
+                        Menu();
+                        break;
 
 
-                case 1:
-                    Login();
-                    break;
-                case 2:
-                    Register();
-                    break;
-                case 3:
-                    ViewProducts();
-                    break;
-                case 4:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("Please choose an option");
-                    Menu();
-                    break;
+                    case 1:
+                        Login();
+                        break;
+                    case 2:
+                        Register();
+                        break;
+                    case 3:
+                        ViewProducts();
+                        break;
+                    case 4:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Please choose an option");
+                        Menu();
+                        break;
 
+                }
             }
+            catch (Exception)
+            {
+                Console.WriteLine("_______________");
+                Console.WriteLine("Invalid Input");
+                Console.WriteLine("_______________");
+            }
+            
         }
 
         private void Login()
@@ -162,49 +184,62 @@ namespace ECommerce_Application
 
         private void LoggedInMenu()
         {
-            if(CurrentUser.role == "Customer")
+            try
             {
-                Console.WriteLine("\nDashboard");
-                Console.WriteLine("-------------\n");
-                Console.WriteLine("0. Clear Screen");
-                Console.WriteLine("1. View Products");
-                Console.WriteLine("2. View profile");
-                Console.WriteLine("3. My Orders");
-                Console.WriteLine("4. View Cart");
-                Console.WriteLine("5. Place Orders");
-                Console.WriteLine("6. Logout");
-                Console.WriteLine("7. LogOut & Exit\n");
+                if (CurrentUser.role == "Customer")
+                {
+                    Console.WriteLine("\nDashboard");
+                    Console.WriteLine("-------------\n");
+                    Console.WriteLine("0. Clear Screen");
+                    Console.WriteLine("1. View Products");
+                    Console.WriteLine("2. View profile");
+                    Console.WriteLine("3. My Orders");
+                    Console.WriteLine("4. View Cart");
+                    Console.WriteLine("5. Place Orders");
+                    Console.WriteLine("6. Logout");
+                    Console.WriteLine("7. LogOut & Exit\n");
 
-                Console.WriteLine("Your Choice: ");
-                var choice = int.Parse(Console.ReadLine());
-                LoggedInMenuDetails(choice);
-            }
-            else if(CurrentUser.role == "Vendor")
-            {
-                Console.WriteLine("\nDashboard");
-                Console.WriteLine("-------------\n");
-                Console.WriteLine("0. Clear Screen");
-                Console.WriteLine("1. View Products");
-                Console.WriteLine("2. View profile");
-                Console.WriteLine("3. My Customer Orders");
-                Console.WriteLine("4. Logout");
-                Console.WriteLine("5. LogOut & Exit\n");
-
-                Console.WriteLine("Your Choice: ");
-             
+                    Console.WriteLine("Your Choice: ");
                     var choice = int.Parse(Console.ReadLine());
-                //if(choice.GetType == "Int")
                     LoggedInMenuDetails(choice);
-                
+                }
+                else if (CurrentUser.role == "Vendor")
+                {
+                    Console.WriteLine("\nDashboard");
+                    Console.WriteLine("-------------\n");
+                    Console.WriteLine("0. Clear Screen");
+                    Console.WriteLine("1. View Products");
+                    Console.WriteLine("2. View profile");
+                    Console.WriteLine("3. My Customer Orders");
+                    Console.WriteLine("4. Logout");
+                    Console.WriteLine("5. LogOut & Exit\n");
 
-                
+                    Console.WriteLine("Your Choice: ");
+
+                    var choice = int.Parse(Console.ReadLine());
+                    //if(choice.GetType == "Int")
+                    LoggedInMenuDetails(choice);
+
+
+
+                }
+
             }
-            
+            catch (Exception)
+            {
+                Console.Clear();
+                Console.WriteLine("_______________");
+                Console.WriteLine("Invalid Input");
+                Console.WriteLine("_______________");
+                LoggedInMenu();
+            }
+           
         }
 
         private void LoggedInMenuDetails(int choice)
         {
-           
+            try
+            {
                 if (CurrentUser.role == "Customer")
                 {
                     switch (choice)
@@ -275,11 +310,21 @@ namespace ECommerce_Application
                             LoggedInMenu();
                             break;
 
-                    
+
+                    }
+
                 }
 
             }
-            
+            catch (Exception)
+            {
+                Console.Clear();
+                Console.WriteLine("_______________");
+                Console.WriteLine("Invalid Input");
+                Console.WriteLine("_______________");
+                LoggedInMenu();
+            }
+              
 
         }
 
@@ -393,8 +438,13 @@ namespace ECommerce_Application
                 int quantity = Convert.ToInt32(Console.ReadLine());
 
                 produts.ProductList.Add(new Products(productName, prodId, prodPrice, vendorId, quantity));
-                Console.WriteLine("\n Adding Product is in process...... \n");
-                Thread.Sleep(1000);
+                Console.Write("\n Adding Product is in process......");
+                for (int i = 0; i < 10; i++)
+                {
+                    Thread.Sleep(200);
+                    Console.Write(".");
+                }
+                
                 VendorProfile();
             }
 
@@ -414,6 +464,12 @@ namespace ECommerce_Application
 
         private void PlaceOrders()
         {
+            if (Auth.isLogIn() == false)
+            {
+                Console.WriteLine("\nYou Have not logged in. Please Login");
+                Login();
+            }
+
             Console.WriteLine("Insert Product ID");
             var pId = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Insert the Quantity");
@@ -427,13 +483,18 @@ namespace ECommerce_Application
             if(CurrentUser.role != "Vendor" || CurrentUser.role != "vendor")
             {
                 Console.Write("Inserting Please Wait...");
-                orders.placeOrder(pId,CurrentUser.UserId, quantity);
+                var prods = produts.ProductList;
+                User user = CurrentUser;
+                var result = orders.placeOrder(pId,CurrentUser.UserId, quantity, prods, user);
                 for (int i = 0; i < 10; i++)
                 {
                     Thread.Sleep(200);
                     Console.Write(".");
                 }
-                Console.WriteLine("Order Inserted Successfully");
+                if (result == "quantity is not valid")
+                    Console.WriteLine("\n"+result);
+                else
+                    Console.WriteLine("\nOrder Inserted Successfully");
                 LoggedInMenu();
             }
             else
@@ -497,9 +558,9 @@ namespace ECommerce_Application
                 {
                     
                     Orders productObject = order;
-                    orders.cancleOrder(productObject);
+                    orders.cancleOrder(productObject, CurrentUser, produts.ProductList);
                     //orders.OrdersList.Remove(order);
-                    Console.WriteLine("Cancling Product Plase Wait...");
+                    Console.Write("Cancling Product Plase Wait...");
                     for (int i = 0; i < 10; i++)
                     {
                         Thread.Sleep(200);
@@ -514,12 +575,13 @@ namespace ECommerce_Application
             {
                 Console.WriteLine("Product with {0} Not found", prodId);
             }
-                
+            Console.WriteLine("____________________________________________________________________");
+
         }
 
         private void ViewProducts()
         {
-            Console.WriteLine("____________________________________________________________________");
+            Console.WriteLine("____________________________________________________________________ \n");
 
             var ProductsList = produts.ProductList;
 
@@ -528,6 +590,8 @@ namespace ECommerce_Application
                 Console.WriteLine("Product_Id : {3}, Product name : {0}, price {1}/-  ,available Quantity {2} \n",
                     product.Name, product.price, product.quantity,product.prodId);
             }
+            Console.WriteLine("____________________________________________________________________");
+
 
             Console.WriteLine("\nSelect an action");
             Console.WriteLine("----------------\n");

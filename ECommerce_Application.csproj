@@ -48,12 +48,12 @@
     <Compile Include="Models\orders.cs" />
     <Compile Include="Models\products.cs" />
     <Compile Include="Models\Vendors.cs" />
-    <Compile Include="Services\orderService.cs" />
-    <Compile Include="Services\productService.cs" />
+    <Compile Include="bll\orderService.cs" />
+    <Compile Include="bll\productService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\user.cs" />
-    <Compile Include="Services\userService.cs" />
+    <Compile Include="bll\userService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

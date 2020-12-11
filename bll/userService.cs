@@ -24,7 +24,7 @@ namespace ECommerce_Application
         {
             Random rand = new Random();
             int UserId = rand.Next(1000, 2000);
-            int walletMoney = 5000;
+            int walletMoney = 1000;
 
              _UsersList.Add(new User(UserName, UserId, UserType, walletMoney, password));
 
