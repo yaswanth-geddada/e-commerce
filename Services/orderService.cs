@@ -32,18 +32,19 @@ namespace ECommerce_Application
                 {
                     if (product.prodId == item.prodId && custId == item.UserId)
                     {
-                        //Console.WriteLine(item.quantity + product.Name + product.price);
-                        Console.WriteLine("ProductId : {4}, Product : {0}, Price : {1}, Quantity : {2}, Status : {3}",
-                            product.Name, product.price, item.quantity, item.status, item.prodId);
+                        //Console.WriteLine(item.quantity + product.Name + product.price);, Status : {3}, item.status
+                        Console.WriteLine("ProductId : {3}, Product : {0}, Price : {1}, Quantity : {2}",
+                            product.Name, product.price, item.quantity, item.prodId);
                         count = count+1;
                     }
                 }  
             }
             return count;
         }
-        public void placeOrder()
+        public void placeOrder(int proId,int userId,int quantity)
         {
-            _ordersList.Add(new Orders(102, 1234, 1, "Pending"));
+            string Status = "Pending";
+            _ordersList.Add(new Orders(proId, userId, quantity, Status));
             
         }
 

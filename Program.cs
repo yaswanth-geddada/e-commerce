@@ -112,12 +112,13 @@ namespace ECommerce_Application
 
         private void Register()
         {
-            
 
-            
+
+
+            Console.WriteLine("____________________________________________________________________");
 
             Console.WriteLine(
-               "\nPlease select the user Type \nPress 1 for Customer \n Press 2 for Vendor"
+               "\nPlease select the user Type\nPress 1 for Customer\nPress 2 for Vendor"
                );
             string option = Console.ReadLine();
             string UserType;
@@ -292,6 +293,12 @@ namespace ECommerce_Application
 
         private void LogOut()
         {
+            Console.Write("Loggin Out .");
+            for (int i = 0; i < 10; i++)
+            {
+                Thread.Sleep(200);
+                Console.Write(".");
+            }
             Auth.LogOut();
             Auth = new Authentication();
             CurrentUser = new User();
@@ -300,6 +307,7 @@ namespace ECommerce_Application
 
         private void ViewProfile()
         {
+            Console.WriteLine("____________________________________________________________________");
             if (Auth.isLogIn() == false)
             {
                 Console.WriteLine("\nYou Have not logged in. Please Login");
@@ -346,6 +354,8 @@ namespace ECommerce_Application
 
         private void VendorProfile()
         {
+            Console.WriteLine("____________________________________________________________________\n");
+
             Console.WriteLine("1. View your product list");
             Console.WriteLine("2. Add new Product");
             Console.WriteLine("3. View Customer Orders");
@@ -362,8 +372,8 @@ namespace ECommerce_Application
                     Console.WriteLine((item.vendorId).ToString(), CurrentUser.UserId);
                     if (item.vendorId == CurrentUser.UserId)
                     {
-                        Console.WriteLine("product name : {0}\nprice {1}/- \navailable Quantity {2} \n",
-                        item.Name, item.price, item.quantity);
+                        Console.WriteLine("Product_Id : {3}, product name : {0}\nprice {1}/- \navailable Quantity {2} \n",
+                        item.Name, item.price, item.quantity,item.prodId);
                     }
                 }
                 VendorProfile();
@@ -404,7 +414,10 @@ namespace ECommerce_Application
 
         private void PlaceOrders()
         {
-
+            Console.WriteLine("Insert Product ID");
+            var pId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Insert the Quantity");
+            var quantity = Convert.ToInt32(Console.ReadLine());
             if (Auth.isLogIn() == false)
             {
                 Console.WriteLine("\nYou Have not logged in. Please Login");
@@ -413,9 +426,13 @@ namespace ECommerce_Application
 
             if(CurrentUser.role != "Vendor" || CurrentUser.role != "vendor")
             {
-                Console.WriteLine("Inserting Please Wait");
-                orders.placeOrder();
-                Thread.Sleep(2000);
+                Console.Write("Inserting Please Wait...");
+                orders.placeOrder(pId,CurrentUser.UserId, quantity);
+                for (int i = 0; i < 10; i++)
+                {
+                    Thread.Sleep(200);
+                    Console.Write(".");
+                }
                 Console.WriteLine("Order Inserted Successfully");
                 LoggedInMenu();
             }
@@ -428,6 +445,8 @@ namespace ECommerce_Application
 
         private void MyOrders()
         {
+            Console.WriteLine("____________________________________________________________________");
+
             int op = 0;
             if (Auth.isLogIn() == false)
             {
@@ -440,6 +459,7 @@ namespace ECommerce_Application
             if(count != 0)
             {
                 Console.WriteLine("\nIf you want to cancle the order press 1");
+                Console.WriteLine("\nPress 2 to Go Back");
                 op = Convert.ToInt32(Console.ReadLine());
             }
             else
@@ -466,6 +486,8 @@ namespace ECommerce_Application
 
         private void cancleOrder(int prodId)
         {
+            Console.WriteLine("____________________________________________________________________");
+
             var lis = orders.OrdersList;
             var count = 0;
             foreach (var order in lis)
@@ -477,6 +499,12 @@ namespace ECommerce_Application
                     Orders productObject = order;
                     orders.cancleOrder(productObject);
                     //orders.OrdersList.Remove(order);
+                    Console.WriteLine("Cancling Product Plase Wait...");
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Thread.Sleep(200);
+                        Console.Write(".");
+                    }
                     Console.WriteLine("\nProduct Cancled");
                     count += 1;
                     break;
@@ -491,12 +519,14 @@ namespace ECommerce_Application
 
         private void ViewProducts()
         {
+            Console.WriteLine("____________________________________________________________________");
+
             var ProductsList = produts.ProductList;
 
             foreach (var product in ProductsList)
             {
-                Console.WriteLine("product name : {0}, price {1}/-  ,available Quantity {2} \n",
-                    product.Name, product.price, product.quantity);
+                Console.WriteLine("Product_Id : {3}, Product name : {0}, price {1}/-  ,available Quantity {2} \n",
+                    product.Name, product.price, product.quantity,product.prodId);
             }
 
             Console.WriteLine("\nSelect an action");
@@ -510,9 +540,11 @@ namespace ECommerce_Application
             switch (Action)
             {
                 case 1:
-                    Console.WriteLine("\nPlease Select an order ID for action: ");
-                    int ProductId = int.Parse(Console.ReadLine());
-                    ProductActionMenu(ProductId);
+                    //redirecting to place orders
+                    PlaceOrders();
+                    //Console.WriteLine("\nPlease Select an order ID for action: ");
+                    //int ProductId = int.Parse(Console.ReadLine());
+                    //ProductActionMenu(ProductId);
                     break;
 
                 case 2:
@@ -534,6 +566,7 @@ namespace ECommerce_Application
 
         private void ProductActionMenu(int ProductId)
         {
+            Console.WriteLine("____________________________________________________________________");
             Console.WriteLine("\nSelect an action");
             Console.WriteLine("----------------\n");
             Console.WriteLine("1. Add to Cart");
@@ -568,11 +601,12 @@ namespace ECommerce_Application
 
         private void MyCart()
         {
-           
+            MyOrders();
         }
 
         private void AddToCart(int ProductId)
         {
+            PlaceOrders();
         }
 
         static void Main(string[] args)
