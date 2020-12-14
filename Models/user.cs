@@ -1,6 +1,6 @@
 ﻿namespace ECommerce_Application
 {
-    class User
+    public class User
     {
         public string UserName { get; set; }
         public int UserId { get; set; }
@@ -22,7 +22,11 @@
             this.password = argpassword;
         }
 
- 
+        public override string ToString()
+        {
+            return (this.UserName + ", " + this.UserId + ", " + this.role + ", " + this.balance + ", " + this.password);
+        }
+
     }
     }
 

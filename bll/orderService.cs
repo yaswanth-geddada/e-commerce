@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-
+using System.IO;
+using System.Text;
+using System.Collections;
 
 namespace ECommerce_Application
 {
@@ -21,6 +23,7 @@ namespace ECommerce_Application
         {
             _ordersList.Add(new Orders(101, 1234, 1, "Pending"));
             _ordersList.Add(new Orders(102, 1235, 1, "Pending"));
+            
         }
 
         public int getOrders(List<Products> Products,int custId)
@@ -28,9 +31,6 @@ namespace ECommerce_Application
 
 
             var table = new ConsoleTable("ProductName", "ProdId", "ProdPrice", "vendorId", "Quantity");
-            
-            
-
 
             int count = 0;
             var lis = Products;
@@ -59,19 +59,15 @@ namespace ECommerce_Application
             
             foreach (var item in prods)
             {
-                if(item.prodId == proId)
+                if(item.prodId == proId )
                 {
-                    if((item.quantity >=  quantity)  && user.balance  >= (item.price * quantity))
+                    if(((item.quantity >=  quantity)  && user.balance  >= (item.price * quantity)))
                     {
                         _ordersList.Add(new Orders(proId, userId, quantity, Status));
                         item.quantity = item.quantity - quantity;
                         user.balance = user.balance - (item.price * quantity);
-                    }
-                    else
-                    {
-                        fail = "quantity is not valid";
-                    }
-                   
+                        fail = "success";
+                    } 
                 }
             }
             return fail;
@@ -104,5 +100,8 @@ namespace ECommerce_Application
             //    originalQuant
             //    )); ;
         }
+
+        
+
     }
 }

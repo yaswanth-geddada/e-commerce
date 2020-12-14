@@ -9,6 +9,7 @@ namespace ECommerce_Application
     class productService
     {
         private static List<Products> _productList = new List<Products>();
+        private static Design _designHelper = new Design();
 
         public List<Products> ProductList
         {
@@ -48,7 +49,10 @@ namespace ECommerce_Application
             {
                 table.AddRow(row.Name,row.prodId,row.price,row.vendorId,row.quantity);
             }
+
+            _designHelper.consoleColorSuccess();
             table.Write();
+            _designHelper.consoleColorResetter();
             //table.AddRow()
         }
 
@@ -63,7 +67,10 @@ namespace ECommerce_Application
 
                 }
             }
+            _designHelper.consoleColorSuccess();
             table.Write();
+            _designHelper.consoleColorResetter();
+
         }
 
     }

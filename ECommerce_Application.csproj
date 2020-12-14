@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bll\cartService.cs" />
     <Compile Include="bll\Design.cs" />
     <Compile Include="Models\Authentication.cs" />
     <Compile Include="Models\Cart.cs" />

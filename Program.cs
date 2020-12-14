@@ -3,7 +3,7 @@
 
 namespace ECommerce_Application
 {
-    class Program
+    public class Program
     {
         private static User CurrentUser = new User();
         private static userService usr = new userService();
@@ -11,11 +11,11 @@ namespace ECommerce_Application
         private static Authentication Auth = new Authentication();
         private static orderService orders = new orderService();
         private static Design _designHelper = new Design();
+        private static cartService cart = new cartService();
         
 
         private void Menu()
         {
-
             try
             {
 
@@ -28,14 +28,19 @@ namespace ECommerce_Application
 
 
                 Console.WriteLine("Your Choice");
+                _designHelper.consoleColorInput();
                 int choise = int.Parse(Console.ReadLine());
+                _designHelper.consoleColorResetter();
                 MenuDetails(choise);
             }
             catch (Exception)
             {
+                _designHelper.consoleColorFail();
                 Console.WriteLine("_______________");
                 Console.WriteLine("Invalid Input");
                 Console.WriteLine("_______________");
+                _designHelper.consoleColorResetter();
+
                 Menu();
             }
         }
@@ -83,13 +88,15 @@ namespace ECommerce_Application
             
         }
 
-        private void Login()
+        public void Login()
         {
             
             int flag = 0;
 
             Console.Write("\nEnter your UserName : ");
+            _designHelper.consoleColorInput();
             var UserName =  Console.ReadLine();
+            _designHelper.consoleColorResetter();
             Console.WriteLine();
             Console.Write("Enter password : ");
             
@@ -116,12 +123,19 @@ namespace ECommerce_Application
 
             if(flag == 0)
             {
-                Console.WriteLine("login failed\n");
+                _designHelper.consoleColorFail();
+                    Console.WriteLine("login failed\n");
+                _designHelper.consoleColorResetter();
+
                 Menu();
             }
 
                 Console.Clear();
+                
+                _designHelper.consoleColorFail();
                 Console.WriteLine("**you are already login**\n");
+                _designHelper.consoleColorResetter();
+                
                 Console.Beep();
                 Menu();
 
@@ -137,7 +151,9 @@ namespace ECommerce_Application
             Console.WriteLine(
                "\nPlease select the user Type\nPress 1 for Customer\nPress 2 for Vendor"
                );
+            _designHelper.consoleColorInput();
             string option = Console.ReadLine();
+            _designHelper.consoleColorResetter();
             string UserType;
             if (option == "1")
             {
@@ -149,10 +165,15 @@ namespace ECommerce_Application
             }
 
             Console.Write("Enter UserName : ");
+
+            _designHelper.consoleColorInput();
             string UserName = Console.ReadLine();
+            _designHelper.consoleColorResetter();
 
             Console.Write("\nEnter Password : ");
+            _designHelper.consoleColorInput();
             string password = Console.ReadLine();
+            _designHelper.consoleColorResetter();
 
 
 
@@ -189,7 +210,11 @@ namespace ECommerce_Application
                     Console.WriteLine("7. LogOut & Exit\n");
 
                     Console.WriteLine("Your Choice: ");
+                    
+                    _designHelper.consoleColorInput();
                     var choice = int.Parse(Console.ReadLine());
+                    _designHelper.consoleColorResetter();
+
                     LoggedInMenuDetails(choice);
                 }
                 else if (CurrentUser.role == "Vendor")
@@ -204,9 +229,11 @@ namespace ECommerce_Application
                     Console.WriteLine("5. LogOut & Exit\n");
 
                     Console.WriteLine("Your Choice: ");
-
+                    _designHelper.consoleColorInput();
                     var choice = int.Parse(Console.ReadLine());
                     //if(choice.GetType == "Int")
+                    _designHelper.consoleColorResetter();
+
                     LoggedInMenuDetails(choice);
 
 
@@ -217,9 +244,11 @@ namespace ECommerce_Application
             catch (Exception)
             {
                 Console.Clear();
+                _designHelper.consoleColorFail();
                 Console.WriteLine("_______________");
                 Console.WriteLine("Invalid Input");
                 Console.WriteLine("_______________");
+                _designHelper.consoleColorResetter();
                 LoggedInMenu();
             }
            
@@ -253,7 +282,8 @@ namespace ECommerce_Application
                             MyCart();
                             break;
                         case 5:
-                            PlaceOrders();
+                            AddToCart();
+                            //PlaceOrders();
                             break;
                         case 6:
                             LogOut();
@@ -308,6 +338,7 @@ namespace ECommerce_Application
             catch (Exception)
             {
                 Console.Clear();
+             
                 Console.WriteLine("_______________");
                 Console.WriteLine("Invalid Input");
                 Console.WriteLine("_______________");
@@ -358,11 +389,15 @@ namespace ECommerce_Application
                 Console.WriteLine("2. Go back to Menu");
 
                 Console.WriteLine("Your option: ");
+
+                _designHelper.consoleColorInput();
                 int op = int.Parse(Console.ReadLine());
+                _designHelper.consoleColorResetter();
 
                 if (op == 1)
                 {
                     MyOrders();
+                    //MyCart();
                 }
 
                 else if (op == 2)
@@ -393,8 +428,9 @@ namespace ECommerce_Application
             Console.WriteLine("4. Go back to Menu");
 
             Console.WriteLine("Your option: ");
+            _designHelper.consoleColorInput();
             int op = int.Parse(Console.ReadLine());
-
+            _designHelper.consoleColorResetter();
             if (op == 1)
             {
                 produts.viewVendorProducts(CurrentUser.UserId);
@@ -431,23 +467,25 @@ namespace ECommerce_Application
         {
             if (Auth.isLogIn() == false)
             {
+                _designHelper.consoleColorFail();
                 Console.WriteLine("\nYou Have not logged in. Please Login");
+                _designHelper.consoleColorResetter();
+
                 Login();
             }
 
             Console.WriteLine("Insert Product ID");
+            _designHelper.consoleColorInput();
             var pId = Convert.ToInt32(Console.ReadLine());
+            _designHelper.consoleColorResetter();
             Console.WriteLine("Insert the Quantity");
+
+            _designHelper.consoleColorInput();
             var quantity = Convert.ToInt32(Console.ReadLine());
-            if (Auth.isLogIn() == false)
-            {
-                Console.WriteLine("\nYou Have not logged in. Please Login");
-                Login();
-            }
+            _designHelper.consoleColorResetter();
 
             if(CurrentUser.role != "Vendor" || CurrentUser.role != "vendor")
             {
-                Console.Write("Inserting Please Wait...");
                 var prods = produts.ProductList;
                 User user = CurrentUser;
                 var result = orders.placeOrder(pId,CurrentUser.UserId, quantity, prods, user);
@@ -455,17 +493,23 @@ namespace ECommerce_Application
                 string before = "Inserting Please Wait...";
                 string after = "";
 
-                if (result == "quantity is not valid")
-                    after = result;
+                if (result == "success")
+                {
+                    after = "Order placed successfully";
+                }
                 else
-                    after = "Order Inserted Successfully";
+                {
+                    after = "Order cant be placed";
+                }
 
                 _designHelper.Loader(before, after);
                 LoggedInMenu();
             }
             else
             {
-                Console.WriteLine("Sorry....you place order !");
+                _designHelper.consoleColorFail();
+                Console.WriteLine("Sorry....Can't place order !");
+                _designHelper.consoleColorResetter();
             }
 
         }
@@ -475,7 +519,9 @@ namespace ECommerce_Application
             int op = 0;
             if (Auth.isLogIn() == false)
             {
+                _designHelper.consoleColorFail();
                 Console.WriteLine("\nYou Have not logged in. Please Login");
+                _designHelper.consoleColorResetter();
                 Login();
             }
             int count = orders.getOrders(produts.ProductList, CurrentUser.UserId);
@@ -486,18 +532,26 @@ namespace ECommerce_Application
                 //Console.WriteLine("____________________________________________________________________");
                 Console.WriteLine("\nIf you want to cancle the order press 1");
                 Console.WriteLine("\nPress 2 to Go Back");
+                _designHelper.consoleColorInput();
                 op = Convert.ToInt32(Console.ReadLine());
+                _designHelper.consoleColorResetter();
             }
             else
             {
+                _designHelper.consoleColorFail();
                 Console.WriteLine("\nNo Orders Found");
+                _designHelper.consoleColorResetter();
+
                 LoggedInMenu();
             }
                 
             if(op == 1)
             {
                 Console.WriteLine("\nEnter the Product Id");
+                _designHelper.consoleColorInput();
                 int prodId = Convert.ToInt32(Console.ReadLine());
+                _designHelper.consoleColorResetter();
+                
                 cancleOrder(prodId);
                 
             }
@@ -531,8 +585,11 @@ namespace ECommerce_Application
             }
             if (count == 0)
             {
+                _designHelper.consoleColorFail();
                 Console.WriteLine("Product with {0} Not found", prodId);
+                _designHelper.consoleColorResetter();
             }
+
             Console.WriteLine("____________________________________________________________________");
 
         }
@@ -540,40 +597,55 @@ namespace ECommerce_Application
         private void ViewProducts()
         {
             produts.viewProducts(); // Products table
- 
-            Console.WriteLine("\nSelect an action");
-            Console.WriteLine("----------------\n");
-            Console.WriteLine("1. Continue Adding To Cart");
-            Console.WriteLine("2. Go Back to Menu");
-
-            Console.WriteLine("\nSelect an Option: ");
-            int Action = int.Parse(Console.ReadLine());
-
-            switch (Action)
+            try
             {
-                case 1:
-                    //redirecting to place orders
-                    PlaceOrders();
-                    //Console.WriteLine("\nPlease Select an order ID for action: ");
-                    //int ProductId = int.Parse(Console.ReadLine());
-                    //ProductActionMenu(ProductId);
-                    break;
+                Console.WriteLine("\nSelect an action");
+                Console.WriteLine("----------------\n");
+                Console.WriteLine("1. Continue Adding To Cart");
+                Console.WriteLine("2. Go Back to Menu");
 
-                case 2:
+                Console.WriteLine("\nSelect an Option: ");
+                _designHelper.consoleColorInput();
+                int Action = int.Parse(Console.ReadLine());
+                _designHelper.consoleColorResetter();
 
-                    if(Auth.isLogIn() == false)
-                        Menu();
+                switch (Action)
+                {
+                    case 1:
+                        //redirecting to place orders
+                        PlaceOrders();
+                        //AddToCart();
+                        //Console.WriteLine("\nPlease Select an order ID for action: ");
+                        //int ProductId = int.Parse(Console.ReadLine());
+                        //ProductActionMenu(ProductId);
+                        break;
 
-                    else
-                        LoggedInMenu();
+                    case 2:
 
-                    break;
+                        if (Auth.isLogIn() == false)
+                            Menu();
 
-                default:
-                    Console.WriteLine("\nPlease Select an Option.");
-                    ViewProducts();
-                    break;
+                        else
+                            LoggedInMenu();
+
+                        break;
+
+                    default:
+                        Console.WriteLine("\nPlease Select an Option.");
+                        ViewProducts();
+                        break;
+                }
             }
+            catch (Exception)
+            {
+                _designHelper.consoleColorFail();
+                Console.WriteLine("_______________");
+                Console.WriteLine("Invalid Input");
+                Console.WriteLine("_______________");
+                _designHelper.consoleColorResetter();
+                LoggedInMenu();
+            }
+            
         }
 
         private void ProductActionMenu(int ProductId)
@@ -585,12 +657,16 @@ namespace ECommerce_Application
             Console.WriteLine("2. Go Back to Menu");
 
             Console.WriteLine("\nYour option: ");
+
+            _designHelper.consoleColorInput();
             int choice = int.Parse(Console.ReadLine());
+            _designHelper.consoleColorResetter();
+
 
             switch (choice)
             {
                 case 1:
-                    AddToCart(ProductId);
+                    AddToCart();
                     break;
 
                 case 2:
@@ -613,17 +689,56 @@ namespace ECommerce_Application
 
         private void MyCart()
         {
-            MyOrders();
+
+             var cartItems = cart.getCart(Convert.ToString(CurrentUser.UserId), 1);
+            cart.cartTable(cartItems,produts.ProductList,CurrentUser.UserId);
+            LoggedInMenu();
         }
 
-        private void AddToCart(int ProductId)
+        private void AddToCart()
         {
-            PlaceOrders();
+            Console.WriteLine("Insert Product ID");
+            _designHelper.consoleColorInput();
+            var pId = Convert.ToInt32(Console.ReadLine());
+            _designHelper.consoleColorResetter();
+
+            Console.WriteLine("Insert the Quantity");
+            _designHelper.consoleColorInput();
+            var quantity = Convert.ToInt32(Console.ReadLine());
+            _designHelper.consoleColorResetter();
+
+            if (CurrentUser.role != "Vendor" || CurrentUser.role != "vendor")
+            {
+                var prods = produts.ProductList;
+                User user = CurrentUser;
+                string result = cart.AddtoCart(pId, CurrentUser.UserId, quantity, prods, user, orders.OrdersList);
+                string before = "Inserting Please Wait...";
+                string after = "";
+
+                if (result == "success")
+                {
+                    after = "Order placed successfully";
+                }
+                else
+                {
+                    after = "Order cant be placed";
+                }
+
+                _designHelper.Loader(before, after);
+                LoggedInMenu();
+            }
+            else
+            {
+                _designHelper.consoleColorFail();
+                Console.WriteLine("Sorry....Can't place order !");
+                _designHelper.consoleColorResetter();
+            }
         }
 
         static void Main(string[] args)
         {
             var Obj = new Program();
+            
 
             Obj.Menu();
 

@@ -6,7 +6,7 @@ using ConsoleTables;
 
 namespace ECommerce_Application
 {
-    class userService
+    public class userService
     {
         private static List<User> _UsersList = new List<User>();
 
@@ -20,6 +20,9 @@ namespace ECommerce_Application
             _UsersList.Add(new User("Akshay", 1000, "Vendor", 1000, "1000"));
             _UsersList.Add(new User("Sai Prasanna", 1235, "Customer", 1000, "1234"));
         }
+
+
+
 
         public void userRegistration(string UserName,string UserType,string password)
         {
