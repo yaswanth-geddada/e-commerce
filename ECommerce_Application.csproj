@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bll\cartService.cs" />
+    <Compile Include="Ado\CartAdo.cs" />
     <Compile Include="bll\Design.cs" />
     <Compile Include="Models\Authentication.cs" />
     <Compile Include="Models\Cart.cs" />

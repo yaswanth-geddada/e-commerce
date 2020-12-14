@@ -8,14 +8,13 @@ namespace ECommerce_Application
 {
   class CartAdo
   {
-
     private static List<Cart> _cartList = new List<Cart>();
 
-    public void AddToCart()
+    public static void AddToCart(Cart cart)
     {
-
+      _cartList.Add(cart);
     }
-    public Cart[] GetCartList()
+    public static Cart[] GetCartList()
     {
       return _cartList.ToArray();
     }

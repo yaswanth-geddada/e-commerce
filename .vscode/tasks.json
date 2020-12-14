@@ -8,7 +8,7 @@
       ],
       "type": "shell",
       "windows": {
-        "command": "/d/Projects/dotNetprojects/e-commerce/.vscode/RunApp.sh" //  CHANGE THE PATH ACCORDINGLY
+        "command": "/c/Users/aksha/workspace/e-commerce/.vscode/RunApp.sh" //  CHANGE THE PATH ACCORDINGLY
       },
       "problemMatcher": [],
       "group": {

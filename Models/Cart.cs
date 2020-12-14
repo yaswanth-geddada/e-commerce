@@ -10,27 +10,27 @@ namespace ECommerce_Application
   {
 
     private int _userId;
+    private int _itemId;
     private string _itemName;
-    private string _itemCategory;
-    private string _itemQuantity;
-    private float _itemPrice;
+    private int _itemQuantity;
+    private int _itemPrice;
 
+    public int ItemId { get => _itemId; set => _itemId = value; }
     public int UserId { get => _userId; set => _userId = value; }
     public string ItemName { get => _itemName; set => _itemName = value; }
-    public string ItemCategory { get => _itemCategory; set => _itemCategory = value; }
-    public float ItemPrice { get => _itemPrice; set => _itemPrice = value; }
-    public string ItemQuantity { get => _itemQuantity; set => _itemQuantity = value; }
+    public int ItemPrice { get => _itemPrice; set => _itemPrice = value; }
+    public int ItemQuantity { get => _itemQuantity; set => _itemQuantity = value; }
 
     public Cart()
     {
 
     }
 
-    public Cart(int argUserId, string argItemName, string argItemCategory, string _itemQuantity, float argItemPrice)
+    public Cart(int argItemId, int argUserId, string argItemName, int _itemQuantity, int argItemPrice)
     {
+      this._itemId = argItemId;
       this._userId = argUserId;
       this._itemName = argItemName;
-      this._itemCategory = argItemCategory;
       this._itemPrice = argItemPrice;
       this._itemQuantity = _itemQuantity;
     }
