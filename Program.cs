@@ -715,7 +715,7 @@ namespace ECommerce_Application
 
         foreach (var cart in MyCart)
         {
-          if (cart.UserId == CurrentUser.serId)
+          if (cart.UserId == CurrentUser.UserId)
           {
             orders.placeOrder(cart.ItemId, CurrentUser.UserId, cart.ItemQuantity, prods, user);
           }
