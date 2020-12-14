@@ -31,7 +31,7 @@ namespace ECommerce_Application
         Console.WriteLine("4. Exit\n");
 
 
-        Console.WriteLine("Your Choice");
+        Console.Write("Your Choice: ");
         _designHelper.consoleColorInput();
         int choise = int.Parse(Console.ReadLine());
         _designHelper.consoleColorResetter();
@@ -40,7 +40,7 @@ namespace ECommerce_Application
       catch (Exception)
       {
         _designHelper.consoleColorFail();
-        Console.WriteLine("_______________");
+        Console.WriteLine("\n_______________");
         Console.WriteLine("Invalid Input");
         Console.WriteLine("_______________");
         _designHelper.consoleColorResetter();
@@ -282,7 +282,7 @@ namespace ECommerce_Application
               MyOrders();
               break;
             case 4:
-              MyCart();
+              ViewMyCart();
               break;
             case 5:
               LogOut();
@@ -649,10 +649,14 @@ namespace ECommerce_Application
     }
 
 
-    private void MyCart()
+    private void ViewMyCart()
     {
 
       Cart[] MyCart = CartService.GetCartList();
+
+      Console.WriteLine("------------------------------------------------------------------");
+      Console.WriteLine("|                          My Cart!                              |");
+      Console.WriteLine("------------------------------------------------------------------");
       ConsoleTable table = new ConsoleTable("ProductName", "ProdId", "ProdPrice", "Quantity");
 
       foreach (Cart cart in MyCart)
@@ -666,6 +670,77 @@ namespace ECommerce_Application
       _designHelper.consoleColorSuccess();
       table.Write();
       _designHelper.consoleColorResetter();
+
+      Console.WriteLine("\nSelect an option");
+      Console.WriteLine("----------------");
+      Console.WriteLine("1. Checkout.");
+      Console.WriteLine("2. Continue Shopping.");
+      Console.WriteLine("3. Go back to Menu.");
+
+      Console.Write("\nYour option: ");
+      _designHelper.consoleColorInput();
+      var option = int.Parse(Console.ReadLine());
+      _designHelper.consoleColorResetter();
+
+      switch (option)
+      {
+        case 1:
+          Checkout();
+          break;
+        case 2:
+          ViewProducts();
+          break;
+        case 3:
+          LoggedInMenu();
+          break;
+        default:
+          Console.WriteLine("Please choose an option");
+          ViewMyCart();
+          break;
+
+      }
+
+
+    }
+
+    private void Checkout()
+    {
+
+      Cart[] MyCart = CartService.GetCartList();
+
+      if (CurrentUser.role != "Vendor" || CurrentUser.role != "vendor")
+      {
+        var prods = produts.ProductList;
+        User user = CurrentUser;
+
+        foreach (var cart in MyCart)
+        {
+          if (cart.UserId == CurrentUser.serId)
+          {
+            orders.placeOrder(cart.ItemId, CurrentUser.UserId, cart.ItemQuantity, prods, user);
+          }
+        }
+        string before = "Inserting Please Wait...";
+        string after = "";
+
+        if (result == "success")
+        {
+          after = "Order placed successfully";
+        }
+        else
+        {
+          after = "Order cant be placed";
+        }
+
+        _designHelper.Loader(before, after);
+        LoggedInMenu();
+      }
+      else
+      {
+        _designHelper.consoleColorFail();
+        Console.WriteLine("Sorry....Can't place order !");
+        _designHelper.consoleColorResetter();
+      }
 
     }
 
