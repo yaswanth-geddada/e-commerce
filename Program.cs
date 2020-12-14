@@ -593,12 +593,7 @@ namespace ECommerce_Application
       produts.viewProducts(); // Products table
       try
       {
-        Console.Write("\nInsert Product ID: ");
-        _designHelper.consoleColorInput();
-        var ProductId = int.Parse(Console.ReadLine());
-        _designHelper.consoleColorResetter();
-
-
+       
         Console.WriteLine("\nSelect an action");
         Console.WriteLine("----------------\n");
         Console.WriteLine("1. Buy Now");
@@ -613,10 +608,18 @@ namespace ECommerce_Application
         switch (Action)
         {
           case 1:
+            Console.Write("\nInsert Product ID: ");
+            _designHelper.consoleColorInput();
+            var ProductId = int.Parse(Console.ReadLine());
+            _designHelper.consoleColorResetter();
             PlaceOrders(ProductId);
             break;
 
           case 2:
+            Console.Write("\nInsert Product ID: ");
+            _designHelper.consoleColorInput();
+            ProductId = int.Parse(Console.ReadLine());
+            _designHelper.consoleColorResetter();
             AddToCart(ProductId);
             break;
 
@@ -723,14 +726,14 @@ namespace ECommerce_Application
         string before = "Inserting Please Wait...";
         string after = "";
 
-        if (result == "success")
-        {
-          after = "Order placed successfully";
-        }
-        else
-        {
-          after = "Order cant be placed";
-        }
+        //if (result == "success")
+        //{
+        //  after = "Order placed successfully";
+        //}
+        //else
+        //{
+        //  after = "Order cant be placed";
+        //}
 
         _designHelper.Loader(before, after);
         LoggedInMenu();
@@ -759,11 +762,11 @@ namespace ECommerce_Application
           if (ProductId == prod.prodId)
             CartService.AddToCart(new Cart(ProductId, CurrentUser.UserId, prod.Name, quantity, prod.price));
         }
-        string before = "Adding to Cart...";
-        string after = "Added to Cart...";
 
-        _designHelper.Loader(before, after);
-        LoggedInMenu();
+                _designHelper.consoleColorSuccess();
+                Console.WriteLine("Added to Cart...");
+                _designHelper.consoleColorResetter();
+                LoggedInMenu();
       }
       else
       {
