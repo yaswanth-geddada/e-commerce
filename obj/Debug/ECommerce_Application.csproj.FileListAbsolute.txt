@@ -21,7 +21,6 @@ D:\Projects\dotNetprojects\e-commerce\obj\Debug\ECommerce_Application.pdb
 D:\Projects\dotNetprojects\e-commerce\bin\Debug\ConsoleTables.dll
 D:\Projects\dotNetprojects\e-commerce\bin\Debug\ConsoleTables.pdb
 D:\Projects\dotNetprojects\e-commerce\obj\Debug\ECommerce_Application.csproj.CopyComplete
-D:\Projects\dotNetprojects\e-commerce\obj\Debug\ECommerce_Application.csprojAssemblyReference.cache
 C:\Users\aksha\workspace\e-commerce\bin\Debug\ECommerce_Application.exe.config
 C:\Users\aksha\workspace\e-commerce\bin\Debug\ECommerce_Application.exe
 C:\Users\aksha\workspace\e-commerce\bin\Debug\ECommerce_Application.pdb

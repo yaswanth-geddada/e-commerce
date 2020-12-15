@@ -16,21 +16,21 @@ namespace ECommerce_Application
     }
     public userService()
     {
-      _UsersList.Add(new User("Yaswanth", 1234, "Customer", 1000, "1234"));
-      _UsersList.Add(new User("Akshay", 1000, "Vendor", 1000, "1000"));
-      _UsersList.Add(new User("Sai Prasanna", 1235, "Customer", 1000, "1234"));
+      _UsersList.Add(new User("Yaswanth", 1234, "Customer", 1000, "1234","yaswanthgeddada@gmail.com","palacole, Ap"));
+      _UsersList.Add(new User("Akshay", 1000, "Vendor", 1000, "1000","test@gmail.com","test address"));
+      _UsersList.Add(new User("Sai Prasanna", 1235, "Customer", 1000, "1234","test@gmail.com", "test address"));
     }
 
 
 
 
-    public void userRegistration(string UserName, string UserType, string password)
+    public void userRegistration(string UserName, string UserType, string password, string email, string address)
     {
       Random rand = new Random();
       int UserId = rand.Next(1000, 2000);
       int walletMoney = 1000;
 
-      _UsersList.Add(new User(UserName, UserId, UserType, walletMoney, password));
+      _UsersList.Add(new User(UserName, UserId, UserType, walletMoney, password, email, address));
     }
 
     public string hidePassword()
@@ -65,8 +65,8 @@ namespace ECommerce_Application
 
     public void userProfileTabel(User user)
     {
-      var table = new ConsoleTable("UserId", "User Name", "Wallet Balance");
-      table.AddRow(user.UserId, user.UserName, user.balance);
+      var table = new ConsoleTable("UserId", "User Name", "Wallet Balance","Email","Address");
+      table.AddRow(user.UserId, user.UserName, user.balance, user.Email, user.Address);
       table.Write(Format.Minimal);
     }
 

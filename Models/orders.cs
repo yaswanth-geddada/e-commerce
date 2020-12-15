@@ -2,7 +2,7 @@
 
 namespace ECommerce_Application
 {
-    class Orders
+    public class Orders
     {
         public int prodId { get; set; }
         public int UserId { get; set; }

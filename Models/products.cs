@@ -1,6 +1,6 @@
 ﻿namespace ECommerce_Application
 {
-  class Products
+  public class Products
   {
     public string Name { get; set; }
     public int prodId { get; set; }

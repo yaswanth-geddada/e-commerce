@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace ECommerce_Application
 {
-  class orderService
+  public class orderService
   {
     private static List<Orders> _ordersList = new List<Orders>();
 
@@ -28,7 +28,6 @@ namespace ECommerce_Application
 
     public int getOrders(List<Products> Products, int custId)
     {
-
 
       var table = new ConsoleTable("ProductName", "ProdId", "ProdPrice", "vendorId", "Quantity");
 

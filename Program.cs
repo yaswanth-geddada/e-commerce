@@ -168,20 +168,31 @@ namespace ECommerce_Application
         UserType = "Vendor";
       }
 
-      Console.Write("Enter UserName : ");
+            Console.Write("Enter UserName : ");
 
-      _designHelper.consoleColorInput();
-      string UserName = Console.ReadLine();
-      _designHelper.consoleColorResetter();
+            _designHelper.consoleColorInput();
+            string UserName = Console.ReadLine();
+            _designHelper.consoleColorResetter();
 
-      Console.Write("\nEnter Password : ");
-      _designHelper.consoleColorInput();
-      string password = Console.ReadLine();
-      _designHelper.consoleColorResetter();
+            Console.Write("\nEnter Password : ");
+            _designHelper.consoleColorInput();
+            string password = Console.ReadLine();
+            _designHelper.consoleColorResetter();
+
+
+            Console.Write("\nEnter Email : ");
+            _designHelper.consoleColorInput();
+            string email = Console.ReadLine();
+            _designHelper.consoleColorResetter();
+
+            Console.Write("\nEnter Address : ");
+            _designHelper.consoleColorInput();
+            string address = Console.ReadLine();
+            _designHelper.consoleColorResetter();
 
 
 
-      usr.userRegistration(UserName, UserType, password);
+            usr.userRegistration(UserName, UserType, password, email, address);
 
 
       _designHelper.Loader("\nAccount creation is in process..", "");
@@ -189,7 +200,8 @@ namespace ECommerce_Application
       Console.Clear();
       Console.WriteLine(
           "\n Account has been created Successfully \n UserName : {0} , Password : {1}",
-          UserName, password
+          UserName, 
+          password
           );
       Console.WriteLine("\nPlease Login");
       Login();
@@ -377,7 +389,7 @@ namespace ECommerce_Application
       usr.userProfileTabel(CurrentUser);
 
 
-      Console.WriteLine("____________________________________________________________________");
+      Console.WriteLine("----------------------------------------------------------------");
       Console.WriteLine("\nSelect An Action");
       Console.WriteLine("----------------");
 
@@ -464,6 +476,7 @@ namespace ECommerce_Application
 
     private void PlaceOrders(int ProductId)
     {
+
       if (Auth.isLogIn() == false)
       {
         _designHelper.consoleColorFail();
@@ -472,8 +485,9 @@ namespace ECommerce_Application
 
         Login();
       }
+            EmailAlert email = new EmailAlert();
 
-      Console.WriteLine("Insert the Quantity");
+            Console.WriteLine("Insert the Quantity");
       _designHelper.consoleColorInput();
       var quantity = Convert.ToInt32(Console.ReadLine());
       _designHelper.consoleColorResetter();
@@ -490,14 +504,25 @@ namespace ECommerce_Application
         if (result == "success")
         {
           after = "Order placed successfully";
-        }
+          
+         }
         else
         {
           after = "Order cant be placed";
         }
 
         _designHelper.Loader(before, after);
-        LoggedInMenu();
+                try
+                {
+                    email.SendEmail(user.Email, "Test Subject", "order inserted successfully");
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("error from sending mail" + ex.InnerException.Message) ;
+                }
+               
+                LoggedInMenu();
       }
       else
       {
@@ -639,11 +664,11 @@ namespace ECommerce_Application
             break;
         }
       }
-      catch (Exception)
+      catch (Exception ex)
       {
         _designHelper.consoleColorFail();
         Console.WriteLine("_______________");
-        Console.WriteLine("Invalid Input");
+        Console.WriteLine("Invalid Input" + ex);
         Console.WriteLine("_______________");
         _designHelper.consoleColorResetter();
         LoggedInMenu();
