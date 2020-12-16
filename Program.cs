@@ -200,7 +200,7 @@ namespace ECommerce_Application
       Console.Clear();
       Console.WriteLine(
           "\n Account has been created Successfully \n UserName : {0} , Password : {1}",
-          UserName, 
+          UserName,
           password
           );
       Console.WriteLine("\nPlease Login");
@@ -504,7 +504,7 @@ namespace ECommerce_Application
         if (result == "success")
         {
           after = "Order placed successfully";
-          
+
          }
         else
         {
@@ -521,7 +521,7 @@ namespace ECommerce_Application
 
                     Console.WriteLine("error from sending mail" + ex.InnerException.Message) ;
                 }
-               
+
                 LoggedInMenu();
       }
       else
@@ -618,7 +618,7 @@ namespace ECommerce_Application
       produts.viewProducts(); // Products table
       try
       {
-       
+
         Console.WriteLine("\nSelect an action");
         Console.WriteLine("----------------\n");
         Console.WriteLine("1. Buy Now");
